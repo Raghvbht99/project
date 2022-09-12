@@ -10,7 +10,7 @@ import {
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 
-export default Screen = () => {
+export default Screen = ({navigation}) => {
     return (
         <SafeAreaView style={{ flex: 1 }} >
             <LinearGradient
@@ -31,7 +31,7 @@ export default Screen = () => {
                                 alignItems: "center",
                                 padding: 10,
                             }}
-                            onPress={() => { alert('Press') }}
+                            onPress={() => { navigation.push("Login")}}
                         >
                             <Text style={{ color: '#FFFFFF',fontSize:22 }}>Login</Text>
                         </TouchableOpacity>
@@ -47,7 +47,7 @@ export default Screen = () => {
                                 alignItems: "center",
                                 padding: 10,
                             }}
-                            onPress={() => { alert('Press') }}
+                            onPress={() => { navigation.push("SignUp")}}
                         >
                             <Text style={{ color: '#FFFFFF',fontSize:22 }}>Sign Up</Text>
                         </TouchableOpacity>
