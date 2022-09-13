@@ -1,0 +1,39 @@
+{
+  "project_info": {
+    "project_number": "300181857435",
+    "project_id": "raghvbhatia-ce350",
+    "storage_bucket": "raghvbhatia-ce350.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:300181857435:android:99a4352909ed394a02d23e",
+        "android_client_info": {
+          "package_name": "com.carsclubnzz"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "300181857435-v2j498pf3hgte6u9o5s7cdt0t8dd6pe9.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDlAkMDZaKSobCogmx6hqf1rgMA9jW5DAo"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "300181857435-v2j498pf3hgte6u9o5s7cdt0t8dd6pe9.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

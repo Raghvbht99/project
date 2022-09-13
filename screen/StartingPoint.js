@@ -8,6 +8,8 @@ import {
     TouchableOpacity
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
+import {COLORS, images, SIZES,GRADIENTS} from '../constants';
+
 export default Screen = (props) => {
     const navigation = props.navigation;
     return (
@@ -18,7 +20,7 @@ export default Screen = (props) => {
             >
                 <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', top: "40%" }}>
                     <LinearGradient
-                        colors={['#D0DFBF', '#98C664']}
+                        colors={GRADIENTS.info}
                         end={{ x: 0, y: 1 }}
                         start={{ x: 1, y: 0 }}
                         style={{ width: "80%", borderRadius: 30 }}
@@ -31,7 +33,7 @@ export default Screen = (props) => {
                             onPress={() => { navigation.push('Login'); }}
                         >
                             <Text style={{color:'#FFFFFF'}}>Get Started</Text>
-                        </TouchableOpacity>
+                        </TouchableOpacity> 
                     </LinearGradient>
                 </View>
             </ImageBackground>

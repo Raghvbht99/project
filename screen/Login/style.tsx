@@ -1,7 +1,6 @@
 /* eslint-disable prettier/prettier */
 import {StyleSheet} from 'react-native';
-
-import { COLORS } from '../../constants';
+import {COLORS} from '../../constants';
 
 const styles = StyleSheet.create({
   containerGradient: {flex: 1, padding: 20},
