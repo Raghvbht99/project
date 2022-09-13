@@ -80,24 +80,6 @@ export const GRADIENTS = {
 
   light: ['#EBEFF4', '#CED4DA'],
   dark: ['#3A416F', '#141727'],
-
-  white: [String(COLORS.white), '#EBEFF4'],
-  black: [String(COLORS.black), '#141727'],
-
-  divider: ['rgba(255,255,255,0.3)', 'rgba(102, 116, 142, 0.6)'],
-  menu: [
-    'rgba(255, 255, 255, 0.2)',
-    'rgba(112, 125, 149, 0.5)',
-    'rgba(255, 255, 255, 0.2)',
-  ],
-  custom1: ['#0093E9', '#80D0C7'],
-  custom2: ['#00DBDE', '#FC00FF'],
-  custom3: ['#FBAB7E', '#F7CE68'],
-  custom4: ['#85FFBD', '#FFFB7D'],
-  custom5: ['#FFDEE9', '#B5FFFC'],
-  custom6: ['#3EECAC', '#EE74E1'],
-  custom7: ['#FF3CAC', '#784BA0', '#2B86C5'],
-  custom8: ['#8E2DE2', '#4A00E0'],
 };
 
 const appTheme = {COLORS, SIZES, FONTS,GRADIENTS};
