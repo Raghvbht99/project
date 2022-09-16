@@ -4,6 +4,7 @@
 /* eslint-disable react-native/no-inline-styles */
 import React from 'react';
 import LinearGradient from 'react-native-linear-gradient';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 import {
     Alert,
@@ -18,31 +19,24 @@ import {
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { COLORS, images, SIZES, GRADIENTS } from '../../constants';
+import { Avatar, Title, Caption, TouchableRipple } from 'react-native-paper';
+
 // import auth from '@react-native-firebase/auth';
 
 // eslint-disable-next-line react/prop-types,@typescript-eslint/ban-ts-comment
 // @ts-ignore
 // eslint-disable-next-line react/prop-types
-const SignIn = ({ navigation }) => {
-    // let currentUser = auth().currentUser;
-    const [data, setData] = React.useState({
-        password: '',
-        checkTextInputChange: false,
-        secureTextEntry: true,
-    });
+const Card = () => {
 
-    const [email, setEmail] = React.useState('');
-    const [password, setPassword] = React.useState('');
-    const [emailError, setEmailError] = React.useState(false);
-    const [passwordError, setPasswordError] = React.useState(false);
-    // replaces password text with * on active
-    const updateSecureTextEntry = () => {
-        setData({
-            ...data,
-            secureTextEntry: !data.secureTextEntry,
-        });
-    };
+    return (
+        <View style={styles.card}>
+            <Text>Card is here</Text>
+        </View>
+    )
+}
 
+
+const Profile = ({ navigation }) => {
     return (
         <ImageBackground
             source={{ uri: 'https://raw.githubusercontent.com/AboutReact/sampleresource/master/crystal_background.jpg' }}
@@ -50,7 +44,7 @@ const SignIn = ({ navigation }) => {
             style={{
                 flex: 1,
                 paddingVertical: SIZES.padding,
-                justifyContent: 'center',
+                // justifyContent: 'center',
             }}>
             <SafeAreaView>
                 <KeyboardAwareScrollView>
@@ -58,7 +52,38 @@ const SignIn = ({ navigation }) => {
                         style={{
                             flex: 1,
                         }}>
-                            <Text>hello</Text>
+                        <View style={{ margin: 10 }}>
+
+                            <View style={styles.userInfoSection}>
+                                <View style={{ flexDirection: 'row', marginTop: 15 }}>
+                                    <Avatar.Image
+                                        source={images.guest}
+                                        size={100}
+                                    />
+                                    <View style={{ marginLeft: 20 }}>
+                                        <View style={styles.row}>
+                                            <Icon name="account" size={20} color="black" />
+                                            <Text style={{ color: "#000000", marginLeft: 3 }}>Nouman Hayat</Text>
+                                        </View>
+                                        <View style={styles.row}>
+                                            <Icon name="email" color="#000000" size={20} />
+                                            <Text style={{ color: "#000000", marginLeft: 3 }}>muhammadnouman@gmail.com</Text>
+                                        </View>
+                                        <View style={styles.row}>
+                                            <Icon name="account-box-multiple" size={20} color="black" />
+                                            <Text style={{ color: "#000000", marginLeft: 3 }}>17/07/1997</Text>
+                                        </View>
+                                    </View>
+                                </View>
+                            </View>
+
+                            <View style={styles.OrganizedEvent}>
+                                <Text style={{ fontSize: 30, color: '#00000' }}>Organized Event</Text>
+                                <View style={{marginTop:10}}>
+                                    <Card />
+                                </View>
+                            </View>
+                        </View>
                     </View>
                 </KeyboardAwareScrollView>
             </SafeAreaView>
@@ -66,9 +91,17 @@ const SignIn = ({ navigation }) => {
     );
 };
 
-export default SignIn;
+export default Profile;
 
 const styles = StyleSheet.create({
+    card:{
+        backgroundColor: '#E9E8F3',
+        borderRadius:15,
+        padding:10
+    },
+    OrganizedEvent: {
+        margin: 10
+    },
     shadow: {
         shadowColor: '#000', // for iphone drop shadow (specifies the android equivalent, elevation: 1)
         shadowOffset: {
@@ -79,15 +112,13 @@ const styles = StyleSheet.create({
         shadowRadius: 3,
         elevation: 1,
     },
-    textBoxSign: {
-        flexDirection: 'row',
-        height: 45,
-        marginHorizontal: 5,
-        marginTop: 5,
-        paddingHorizontal: SIZES.radius,
-        borderRadius: SIZES.radius,
-        backgroundColor: COLORS.lightGray,
-        elevation: 2,
+    // =============================================================
+    userInfoSection: {
+        marginTop: 20
     },
-    textAbove: { fontSize: 14, marginLeft: 12 },
+
+    row: {
+        flexDirection: 'row',
+        marginBottom: 10
+    },
 });

@@ -6,6 +6,7 @@ export const person = require('../assets/images/person.png');
 export const background = require('../assets/images/backgroundagain.png');
 export const google = require('../assets/images/google.png');
 export const background2 = require('../assets/images/backgroundtest3.png');
+export const guest = require('../assets/images/guest.png');
 
 export default {
   logo,
@@ -15,5 +16,6 @@ export default {
   lock,
   background,
   google,
-  background2
+  background2,
+  guest
 };
