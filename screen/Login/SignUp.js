@@ -285,7 +285,7 @@ const SignUP = ({ navigation }) => {
                             </TouchableOpacity>
 
                             <TouchableOpacity onPress={() => {
-                                console.log("Press pressed");
+                                 navigation.push('Dashbord')
                             }}>
                                 <LinearGradient
                                     colors={GRADIENTS.info}
@@ -314,7 +314,7 @@ const SignUP = ({ navigation }) => {
                                                 color: COLORS.white,
                                                 fontSize: 30,
                                             }}>
-                                            Sign In
+                                            Sign Up
                                         </Text>
                                     </View>
                                 </LinearGradient>

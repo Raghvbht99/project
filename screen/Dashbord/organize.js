@@ -23,26 +23,10 @@ import { COLORS, images, SIZES, GRADIENTS } from '../../constants';
 // eslint-disable-next-line react/prop-types,@typescript-eslint/ban-ts-comment
 // @ts-ignore
 // eslint-disable-next-line react/prop-types
+
 const SignIn = ({ navigation }) => {
     // let currentUser = auth().currentUser;
-    const [data, setData] = React.useState({
-        password: '',
-        checkTextInputChange: false,
-        secureTextEntry: true,
-    });
-
-    const [email, setEmail] = React.useState('');
-    const [password, setPassword] = React.useState('');
-    const [emailError, setEmailError] = React.useState(false);
-    const [passwordError, setPasswordError] = React.useState(false);
-    // replaces password text with * on active
-    const updateSecureTextEntry = () => {
-        setData({
-            ...data,
-            secureTextEntry: !data.secureTextEntry,
-        });
-    };
-
+  
     return (
         <ImageBackground
             source={{ uri: 'https://raw.githubusercontent.com/AboutReact/sampleresource/master/crystal_background.jpg' }}
@@ -50,7 +34,7 @@ const SignIn = ({ navigation }) => {
             style={{
                 flex: 1,
                 paddingVertical: SIZES.padding,
-                justifyContent: 'center',
+                // justifyContent: 'center',
             }}>
             <SafeAreaView>
                 <KeyboardAwareScrollView>
@@ -58,7 +42,110 @@ const SignIn = ({ navigation }) => {
                         style={{
                             flex: 1,
                         }}>
-                            <Text>hello</Text>
+                        <View style={{ margin: 5, justifyContent: 'center', alignItems: 'center', fontWeight: 'bold' }}>
+                            <Text style={{ fontSize: 30 }}>CarsClubNZ</Text>
+                        </View>
+                        <View >
+                            <Text style={{ fontSize: 22, marginLeft: 10 }}>Event Name</Text>
+                            <View style={styles.textBoxSign}>
+                                <TextInput
+                                    placeholder="Enter your Event Name"
+                                    // onChangeText={value => setEmail(value)}
+                                    autoCapitalize={'none'}
+                                    style={{
+                                        flex: 1,
+                                        height: 40.5,
+                                        fontSize: 15,
+                                        marginLeft: 2,
+                                    }}
+                                />
+                            </View>
+                        </View>
+                        <View >
+                            <Text style={{ fontSize: 22, marginLeft: 10 }}>Enter Date</Text>
+                            <View style={styles.textBoxSign}>
+                                <TextInput
+                                    placeholder="17/7/2015"
+                                    // onChangeText={value => setEmail(value)}
+                                    autoCapitalize={'none'}
+                                    style={{
+                                        flex: 1,
+                                        height: 40.5,
+                                        fontSize: 15,
+                                        marginLeft: 2,
+                                    }}
+                                />
+                            </View>
+                        </View>
+                        <View >
+                            <Text style={{ fontSize: 22, marginLeft: 10 }}>Enter Time</Text>
+                            <View style={styles.textBoxSign}>
+                                <TextInput
+                                    placeholder="2:30 PM"
+                                    // onChangeText={value => setEmail(value)}
+                                    autoCapitalize={'none'}
+                                    style={{
+                                        flex: 1,
+                                        height: 40.5,
+                                        fontSize: 15,
+                                        marginLeft: 2,
+                                    }}
+                                />
+                            </View>
+                        </View>
+                        <View >
+                            <Text style={{ fontSize: 22, marginLeft: 10 }}>Enter Address</Text>
+                            <View style={styles.textBoxSign}>
+                                <TextInput
+                                    placeholder="Enter Address of event ..."
+                                    // onChangeText={value => setEmail(value)}
+                                    autoCapitalize={'none'}
+                                    style={{
+                                        flex: 1,
+                                        height: 40.5,
+                                        fontSize: 15,
+                                        marginLeft: 2,
+                                    }}
+                                />
+                            </View>
+                        </View>
+                        <View >
+                            <Text style={{ fontSize: 22, marginLeft: 10 }}>Enter Description</Text>
+                            <View style={styles.textBoxSign}>
+                                <TextInput
+                                    placeholder="Enter a description"
+                                    // onChangeText={value => setEmail(value)}
+                                    autoCapitalize={'none'}
+                                    style={{
+                                        flex: 1,
+                                        height: 40.5,
+                                        fontSize: 15,
+                                        marginLeft: 2,
+                                    }}
+                                />
+                            </View>
+                        </View>
+                        <View style={{ flex: 1, justifyContent: 'center', alignItems: 'center', marginTop: 20 }}>
+                            <LinearGradient
+                                colors={GRADIENTS.info}
+                                end={{ x: 0, y: 1 }}
+                                start={{ x: 1, y: 0 }}
+                                style={{ width: "80%", borderRadius: 30 }}
+                            >
+                                <TouchableOpacity
+                                    style={{
+                                        alignItems: "center",
+                                        padding: 10,
+                                    }}
+                                    onPress={() => { navigation.push('Login'); }}
+                                >
+                                    <Text style={{ color: '#ffffff', fontSize: 20 }}>Get Started</Text>
+                                </TouchableOpacity>
+                            </LinearGradient>
+                        </View>
+
+
+
                     </View>
                 </KeyboardAwareScrollView>
             </SafeAreaView>
@@ -88,6 +175,7 @@ const styles = StyleSheet.create({
         borderRadius: SIZES.radius,
         backgroundColor: COLORS.lightGray,
         elevation: 2,
+        justifyContent: 'center', alignItems: 'center',
     },
     textAbove: { fontSize: 14, marginLeft: 12 },
 });

@@ -23,25 +23,26 @@ import { COLORS, images, SIZES, GRADIENTS } from '../../constants';
 // eslint-disable-next-line react/prop-types,@typescript-eslint/ban-ts-comment
 // @ts-ignore
 // eslint-disable-next-line react/prop-types
+const Card = () => {
+    return (
+        <View
+            style={{
+                marginHorizontal: 20,
+                padding: 10,
+                backgroundColor: COLORS.lightGray,
+                borderRadius: 10,
+                marginTop: 10,
+            }}
+        >
+            <Text style={{ fontSize: 20 ,fontWeight: 'bold'}}>
+                New Person added event
+            </Text>
+            <Text style={{ fontSize: 14, marginTop: 10 }}>Both Android and iOS allow you to display formatted text by annotating ranges of a string with specific formatting like bold or colored text</Text>
+        </View>
+    )
+}
 const SignIn = ({ navigation }) => {
     // let currentUser = auth().currentUser;
-    const [data, setData] = React.useState({
-        password: '',
-        checkTextInputChange: false,
-        secureTextEntry: true,
-    });
-
-    const [email, setEmail] = React.useState('');
-    const [password, setPassword] = React.useState('');
-    const [emailError, setEmailError] = React.useState(false);
-    const [passwordError, setPasswordError] = React.useState(false);
-    // replaces password text with * on active
-    const updateSecureTextEntry = () => {
-        setData({
-            ...data,
-            secureTextEntry: !data.secureTextEntry,
-        });
-    };
 
     return (
         <ImageBackground
@@ -50,7 +51,6 @@ const SignIn = ({ navigation }) => {
             style={{
                 flex: 1,
                 paddingVertical: SIZES.padding,
-                justifyContent: 'center',
             }}>
             <SafeAreaView>
                 <KeyboardAwareScrollView>
@@ -58,7 +58,18 @@ const SignIn = ({ navigation }) => {
                         style={{
                             flex: 1,
                         }}>
-                            <Text>hello</Text>
+                        <View style={{ margin: 5, justifyContent: 'center', alignItems: 'center', fontWeight: 'bold' }}>
+                            <Text style={{ fontSize: 30 }}>CarsClubNZ</Text>
+                        </View>
+                        <Card />
+                        <Card />
+                        <Card />
+                        <Card />
+                        <Card />
+                        <Card />
+                        <Card />
+                        <Card />
+                        <Card />
                     </View>
                 </KeyboardAwareScrollView>
             </SafeAreaView>

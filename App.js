@@ -9,10 +9,10 @@ function App() {
     <Stack.Navigator screenOptions={{
       headerShown: false
     }}>
-      <Stack.Screen name="Dashbord" component={Dashbord} />
       <Stack.Screen name="StartingPoint" component={StartingPoint} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="SignUp" component={SignUp} />
+      <Stack.Screen name="Dashbord" component={Dashbord} />
     </Stack.Navigator>
   );
 }

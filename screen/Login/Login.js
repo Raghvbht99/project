@@ -160,7 +160,7 @@ const SignIn = ({ navigation }) => {
                             </TouchableOpacity>
 
                             <TouchableOpacity onPress={() => {
-                                console.log("Press pressed");
+                                navigation.push('Dashbord')
                             }}>
                                 <LinearGradient
                                     colors={GRADIENTS.info}
