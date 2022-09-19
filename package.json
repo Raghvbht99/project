@@ -7,9 +7,16 @@
     "ios": "react-native run-ios",
     "start": "react-native start",
     "test": "jest",
-    "lint": "eslint ."
+    "lint": "eslint .",
+    "clear": "cd android && gradlew clean && cd ../",
+    "prebuild": "npx react-native bundle --platform android --dev false --entry-file index.js --bundle-output android/app/src/main/assets/index.android.bundle --assets-dest android/app/src/main/res",
+    "build": "cd android && gradlew assembleDebug && cd ../"
   },
   "dependencies": {
+    "@react-native-firebase/analytics": "^15.6.0",
+    "@react-native-firebase/app": "^15.6.0",
+    "@react-native-firebase/auth": "^15.6.0",
+    "@react-native-firebase/firestore": "^15.6.0",
     "@react-native-masked-view/masked-view": "^0.2.7",
     "@react-navigation/bottom-tabs": "^6.3.3",
     "@react-navigation/native-stack": "^6.8.0",
