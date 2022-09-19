@@ -17,6 +17,8 @@ import {
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { COLORS, images, SIZES, GRADIENTS } from '../../constants';
+import { useData } from './../hooks';
+
 // import auth from '@react-native-firebase/auth';
 
 // eslint-disable-next-line react/prop-types,@typescript-eslint/ban-ts-comment
@@ -41,6 +43,7 @@ const SignIn = ({ navigation }) => {
             secureTextEntry: !data.secureTextEntry,
         });
     };
+    const { onSignIn } = useData();
 
     return (
         <ImageBackground
@@ -160,7 +163,17 @@ const SignIn = ({ navigation }) => {
                             </TouchableOpacity>
 
                             <TouchableOpacity onPress={() => {
-                                navigation.push('Dashbord')
+                                onSignIn(email,password).then((item)=>{
+                                    if(item.status=='success'){
+                                        navigation.push('Dashbord');
+                                    }else{
+                                        alert(item.message);
+                                    }
+                                    
+                                }).catch((err)=>{
+                                    console.log(item);
+                                })
+                                // navigation.push('Dashbord')
                             }}>
                                 <LinearGradient
                                     colors={GRADIENTS.info}

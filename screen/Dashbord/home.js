@@ -2,7 +2,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react/prop-types */
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 
 import {
@@ -22,35 +22,35 @@ import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
 // import auth from '@react-native-firebase/auth';
-
+import { useData } from './../hooks';
 // eslint-disable-next-line react/prop-types,@typescript-eslint/ban-ts-comment
 // @ts-ignore
 // eslint-disable-next-line react/prop-types
-const UpcomingCard = () => {
-
+const UpcomingCard = ({data}) => {
+    const {attendEvent} =useData();
     return (
         <View style={styles.card}>
             <View style={styles.EventDetails}>
                 <View style={{ justifyContent: 'center', alignItems: 'center', margin: 5 }}>
-                    <Text style={{ color: '#000000', fontSize: 22,fontWeight: 'bold' }}>Event Name</Text>
+                    <Text style={{ color: '#000000', fontSize: 22, fontWeight: 'bold' }}>{data.name}</Text>
                 </View>
                 <View style={{ flexDirection: 'row' }}>
                     <Icon name="update" size={24} color="black" />
                     <Text style={{ fontSize: 18, color: 'black', marginLeft: 10 }}>
-                        Date:17/7/2017
+                        Date:{data.date}
                     </Text>
                 </View>
                 <View style={{ flexDirection: 'row' }}>
                     <Icon name="camera-timer" size={24} color="black" />
                     <Text style={{ fontSize: 18, color: 'black', marginLeft: 10 }}>
-                        Time:12:30 AM
+                        Time:{data.time}
                     </Text>
                 </View>
                 <View style={{ flexDirection: 'row' }}>
                     {/* <Icon name="location-enter" size={24} color="black" /> */}
                     <Ionicons name="location" size={24} color="black" />
                     <Text style={{ fontSize: 18, color: 'black', marginLeft: 10 }}>
-                        Address: Stewart Duff Drive, Rongotai, Wellington 6022, New Zealand
+                        Address: {data.address}
                     </Text>
                 </View>
                 <View >
@@ -61,7 +61,7 @@ const UpcomingCard = () => {
                             Description:
                         </Text>
                     </View>
-                    <Text>Wellington Airport is an international airport located in the suburb of Rongotai in Wellington, the capital city of New Zealand. It lies 3 NM or 5.5 km south-east from the city centre. It is a hub for Air New Zealand and Sounds Air.</Text>
+                    <Text>{data.description}</Text>
                 </View>
                 <View style={{ flexDirection: 'row', marginTop: 10, flex: 1 }}>
                     <LinearGradient
@@ -74,40 +74,40 @@ const UpcomingCard = () => {
                             style={{
                                 alignItems: "center",
                                 padding: 10,
-                                flexDirection:'row'
+                                flexDirection: 'row'
                             }}
-                            onPress={() => { alert("Ok") }}
+                            onPress={() => { attendEvent(data) }}
                         >
                             <MaterialIcons name="account-tree" size={24} color="black" />
                             <Text style={{ color: 'black' }}>Attend</Text>
                         </TouchableOpacity>
                     </LinearGradient>
-                    
+
                 </View>
             </View>
 
         </View>
     )
 }
-const SignIn = ({ navigation }) => {
+const Screen = ({ navigation }) => {
     // let currentUser = auth().currentUser;
-    const [data, setData] = React.useState({
-        password: '',
-        checkTextInputChange: false,
-        secureTextEntry: true,
-    });
-
-    const [email, setEmail] = React.useState('');
-    const [password, setPassword] = React.useState('');
-    const [emailError, setEmailError] = React.useState(false);
-    const [passwordError, setPasswordError] = React.useState(false);
-    // replaces password text with * on active
-    const updateSecureTextEntry = () => {
-        setData({
-            ...data,
-            secureTextEntry: !data.secureTextEntry,
-        });
-    };
+    const { getEvent } = useData();
+    const [event, setEvent] = useState([]);
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const events = await getEvent();
+                if (events.status == "success") {
+                    setEvent(events.message);
+                } else {
+                    alert(events.message);
+                }
+            } catch (error) {
+                alert(error);
+            }
+        }
+        fetchData();
+    }, [getEvent, setEvent]);
 
     return (
         <ImageBackground
@@ -128,25 +128,24 @@ const SignIn = ({ navigation }) => {
                         </View>
                     </View>
                     <View style={styles.OrganizedEvent}>
-                                <Text style={{ fontSize: 30, color: '#00000' }}>UpComing Event</Text>
-                                <View style={{ marginTop: 10 }}>
-                                    <UpcomingCard />
-                                    <UpcomingCard />
-                                    <UpcomingCard />
-                                    <UpcomingCard />
-                                </View>
-                            </View>
+                        <Text style={{ fontSize: 30, color: '#00000' }}>UpComing Event</Text>
+                        <View style={{ marginTop: 10 }}>
+                            {event.map((item, index) => {
+                                return (<UpcomingCard key={index} data={item} navigation={navigation} />);
+                            })}
+                        </View>
+                    </View>
                 </KeyboardAwareScrollView>
             </SafeAreaView>
         </ImageBackground >
     );
 };
 
-export default SignIn;
+export default Screen;
 
 const styles = StyleSheet.create({
-    OrganizedEvent:{
-        margin:10
+    OrganizedEvent: {
+        margin: 10
     },
     EventDetails: {
 

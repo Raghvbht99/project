@@ -1,3 +1,5 @@
+/* eslint-disable no-alert */
+/* eslint-disable react-hooks/rules-of-hooks */
 /* eslint-disable prettier/prettier */
 /* eslint-disable prettier/prettier */
 /* eslint-disable react/prop-types */
@@ -18,15 +20,17 @@ import {
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { COLORS, images, SIZES, GRADIENTS } from '../../constants';
-// import auth from '@react-native-firebase/auth';
+import { useData } from './../hooks';
 
-// eslint-disable-next-line react/prop-types,@typescript-eslint/ban-ts-comment
-// @ts-ignore
-// eslint-disable-next-line react/prop-types
 
 const SignIn = ({ navigation }) => {
     // let currentUser = auth().currentUser;
-  
+    const { addEvent } = useData();
+    const [name, setName] = React.useState('');
+    const [date, setDate] = React.useState('');
+    const [time, setTime] = React.useState('');
+    const [address, setAddress] = React.useState('');
+    const [description, setDescription] = React.useState('');
     return (
         <ImageBackground
             source={{ uri: 'https://raw.githubusercontent.com/AboutReact/sampleresource/master/crystal_background.jpg' }}
@@ -50,7 +54,7 @@ const SignIn = ({ navigation }) => {
                             <View style={styles.textBoxSign}>
                                 <TextInput
                                     placeholder="Enter your Event Name"
-                                    // onChangeText={value => setEmail(value)}
+                                    onChangeText={value => setName(value)}
                                     autoCapitalize={'none'}
                                     style={{
                                         flex: 1,
@@ -66,7 +70,7 @@ const SignIn = ({ navigation }) => {
                             <View style={styles.textBoxSign}>
                                 <TextInput
                                     placeholder="17/7/2015"
-                                    // onChangeText={value => setEmail(value)}
+                                    onChangeText={value => setDate(value)}
                                     autoCapitalize={'none'}
                                     style={{
                                         flex: 1,
@@ -82,7 +86,7 @@ const SignIn = ({ navigation }) => {
                             <View style={styles.textBoxSign}>
                                 <TextInput
                                     placeholder="2:30 PM"
-                                    // onChangeText={value => setEmail(value)}
+                                    onChangeText={value => setTime(value)}
                                     autoCapitalize={'none'}
                                     style={{
                                         flex: 1,
@@ -98,7 +102,7 @@ const SignIn = ({ navigation }) => {
                             <View style={styles.textBoxSign}>
                                 <TextInput
                                     placeholder="Enter Address of event ..."
-                                    // onChangeText={value => setEmail(value)}
+                                    onChangeText={value => setAddress(value)}
                                     autoCapitalize={'none'}
                                     style={{
                                         flex: 1,
@@ -114,7 +118,7 @@ const SignIn = ({ navigation }) => {
                             <View style={styles.textBoxSign}>
                                 <TextInput
                                     placeholder="Enter a description"
-                                    // onChangeText={value => setEmail(value)}
+                                    onChangeText={value => setDescription(value)}
                                     autoCapitalize={'none'}
                                     style={{
                                         flex: 1,
@@ -137,15 +141,27 @@ const SignIn = ({ navigation }) => {
                                         alignItems: "center",
                                         padding: 10,
                                     }}
-                                    onPress={() => { navigation.push('Login'); }}
+                                    onPress={() => {
+                                        if (name !== '' && date !== '' && time !== '' && address !== '' && description !== '') {
+                                            addEvent(name, date, time, address, description).then((item)=>{
+                                                if (item.status === 'success'){
+                                                    alert("Event organize successfully!");
+                                                    navigation.push('Dashbord');
+                                                } else {
+                                                    alert(item.message);
+                                                }
+                                            }).catch((err)=>{
+                                                alert(item.message);
+                                            });
+                                        } else {
+                                            alert('Please enter a valid details');
+                                        }
+                                    }}
                                 >
-                                    <Text style={{ color: '#ffffff', fontSize: 20 }}>Get Started</Text>
+                                    <Text style={{ color: '#ffffff', fontSize: 20 }}>Organize</Text>
                                 </TouchableOpacity>
                             </LinearGradient>
                         </View>
-
-
-
                     </View>
                 </KeyboardAwareScrollView>
             </SafeAreaView>

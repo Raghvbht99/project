@@ -14,7 +14,7 @@ import {
     View,
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
-
+import { useData } from './../hooks';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 // import auth from '@react-native-firebase/auth';
 import { COLORS, images, SIZES, GRADIENTS } from '../../constants';
@@ -29,14 +29,13 @@ const SignUP = ({ navigation }) => {
         checkTextInputChange: false,
         secureTextEntry: true,
     });
-
-
+    const { onSignUp } = useData();
     const [email, setEmail] = React.useState('');
     const [password, setPassword] = React.useState('');
     const [rePassword, setRePassword] = React.useState('');
     const [displayName, setDisplayName] = React.useState('');
-    const [emailError, setEmailError] = React.useState(false);
-    const [passwordError, setPasswordError] = React.useState(false);
+    const [familyName, setFamilyName] = React.useState('');
+    const [driver, setDriver] = React.useState('');
     // replaces password text with * on active
     const updateSecureTextEntry = () => {
         setData({
@@ -225,7 +224,7 @@ const SignUP = ({ navigation }) => {
                                 />
                                 <TextInput
                                     placeholder="Family Name..."
-                                    onChangeText={value => setEmail(value)}
+                                    onChangeText={value => setFamilyName(value)}
                                     autoCapitalize={'none'}
                                     style={{
                                         flex: 1,
@@ -234,13 +233,13 @@ const SignUP = ({ navigation }) => {
                                         marginLeft: 2,
                                     }}
                                 />
-                            </View>  
+                            </View>
 
 
 
                             {/* =================================================================================================================== */}
-                               {/* =========================================================================================================== */}
-                               <Text style={{ fontSize: 14, marginLeft: 12, marginTop: 30 }}>
+                            {/* =========================================================================================================== */}
+                            <Text style={{ fontSize: 14, marginLeft: 12, marginTop: 30 }}>
                                 Driver's License
                             </Text>
                             <View style={styles.textBoxSign}>
@@ -256,7 +255,7 @@ const SignUP = ({ navigation }) => {
                                 />
                                 <TextInput
                                     placeholder="Driver's License..."
-                                    onChangeText={value => setEmail(value)}
+                                    onChangeText={value => setDriver(value)}
                                     autoCapitalize={'none'}
                                     style={{
                                         flex: 1,
@@ -265,12 +264,12 @@ const SignUP = ({ navigation }) => {
                                         marginLeft: 2,
                                     }}
                                 />
-                            </View>  
+                            </View>
 
 
 
                             {/* =================================================================================================================== */}
-                            
+
                             <TouchableOpacity>
                                 <Text
                                     style={{
@@ -285,7 +284,21 @@ const SignUP = ({ navigation }) => {
                             </TouchableOpacity>
 
                             <TouchableOpacity onPress={() => {
-                                 navigation.push('Dashbord')
+                                //  navigation.push('Dashbord')
+                                if (email !== '' && password !== '' && rePassword !== '' && password == rePassword && displayName !== '' && driver !== '') {
+                                    onSignUp(email, password, displayName, familyName, driver).then((item) => {
+                                        if (item.status === 'success') {
+                                            navigation.push('Dashbord')
+                                        } else {
+                                            alert(item.status);
+                                        }
+                                    }).catch((err) => {
+                                        console.log(err);
+                                    });
+                                } else {
+                                    alert('Please enter a valid details');
+                                }
+
                             }}>
                                 <LinearGradient
                                     colors={GRADIENTS.info}
@@ -341,7 +354,7 @@ const SignUP = ({ navigation }) => {
                                             color: COLORS.primary,
                                             fontSize: 19,
                                         }}>
-                                        Sign In 
+                                        Sign In
                                     </Text>
                                 </TouchableOpacity>
                             </View>

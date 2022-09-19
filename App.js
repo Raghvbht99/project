@@ -3,12 +3,15 @@ import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack';
 import { NavigationContainer, DefaultTheme } from '@react-navigation/native';
 const Stack = createStackNavigator();
-import { StartingPoint, Login, SignUp,Dashbord } from './screen/index';
+import { StartingPoint, Login, SignUp, Dashbord } from './screen/index';
+import { DataProvider, useData } from './screen/hooks';
+
 function App() {
   return (
     <Stack.Navigator screenOptions={{
       headerShown: false
-    }}>
+    }}
+      initialRouteName="Dashbord">
       <Stack.Screen name="StartingPoint" component={StartingPoint} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="SignUp" component={SignUp} />
@@ -19,7 +22,9 @@ function App() {
 export default () => {
   return (
     <NavigationContainer >
-      <App />
+      <DataProvider>
+        <App />
+      </DataProvider>
     </NavigationContainer>
   );
 };

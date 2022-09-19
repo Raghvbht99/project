@@ -2,7 +2,7 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react/prop-types */
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 
 import {
@@ -19,11 +19,12 @@ import {
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { COLORS, images, SIZES, GRADIENTS } from '../../constants';
 // import auth from '@react-native-firebase/auth';
+import { useData } from './../hooks';
 
 // eslint-disable-next-line react/prop-types,@typescript-eslint/ban-ts-comment
 // @ts-ignore
 // eslint-disable-next-line react/prop-types
-const Card = () => {
+const Card = ({data}) => {
     return (
         <View
             style={{
@@ -34,16 +35,33 @@ const Card = () => {
                 marginTop: 10,
             }}
         >
-            <Text style={{ fontSize: 20 ,fontWeight: 'bold'}}>
-                New Person added event
+            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>
+                {data.title}
             </Text>
-            <Text style={{ fontSize: 14, marginTop: 10 }}>Both Android and iOS allow you to display formatted text by annotating ranges of a string with specific formatting like bold or colored text</Text>
+            <Text style={{ fontSize: 14, marginTop: 10 }}>{data.subtitle}</Text>
         </View>
     )
 }
-const SignIn = ({ navigation }) => {
+const Screen = ({ navigation }) => {
     // let currentUser = auth().currentUser;
-
+    const { getNotification } = useData();
+    const [notification, setNotification] = useState([]);
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const events = await getNotification();
+                console.log(events);
+                if (events.status == "success") {
+                    setNotification(events.message);
+                } else {
+                    alert(events.message);
+                }
+            } catch (error) {
+                alert(error);
+            }
+        }
+        fetchData();
+    }, [getNotification, setNotification]);
     return (
         <ImageBackground
             source={{ uri: 'https://raw.githubusercontent.com/AboutReact/sampleresource/master/crystal_background.jpg' }}
@@ -61,15 +79,9 @@ const SignIn = ({ navigation }) => {
                         <View style={{ margin: 5, justifyContent: 'center', alignItems: 'center', fontWeight: 'bold' }}>
                             <Text style={{ fontSize: 30 }}>CarsClubNZ</Text>
                         </View>
-                        <Card />
-                        <Card />
-                        <Card />
-                        <Card />
-                        <Card />
-                        <Card />
-                        <Card />
-                        <Card />
-                        <Card />
+                        {notification.map((item, index) => {
+                            return (<Card key={index} data={item}  navigation={navigation} />);
+                        })}
                     </View>
                 </KeyboardAwareScrollView>
             </SafeAreaView>
@@ -77,7 +89,7 @@ const SignIn = ({ navigation }) => {
     );
 };
 
-export default SignIn;
+export default Screen;
 
 const styles = StyleSheet.create({
     shadow: {

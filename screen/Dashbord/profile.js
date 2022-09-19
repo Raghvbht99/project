@@ -2,11 +2,12 @@
 /* eslint-disable prettier/prettier */
 /* eslint-disable react/prop-types */
 /* eslint-disable react-native/no-inline-styles */
-import React from 'react';
+import React, { useState, useEffect } from 'react';
 import LinearGradient from 'react-native-linear-gradient';
 import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 import Ionicons from 'react-native-vector-icons/Ionicons';
 import MaterialIcons from 'react-native-vector-icons/MaterialIcons';
+import auth from '@react-native-firebase/auth';
 import {
     Alert,
     Image,
@@ -21,37 +22,37 @@ import {
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { COLORS, images, SIZES, GRADIENTS } from '../../constants';
 import { Avatar, Title, Caption, TouchableRipple } from 'react-native-paper';
-
+import { useData } from './../hooks';
 // import auth from '@react-native-firebase/auth';
 
 // eslint-disable-next-line react/prop-types,@typescript-eslint/ban-ts-comment
 // @ts-ignore
 // eslint-disable-next-line react/prop-types
-const Card = () => {
-
+const Card = ({ data, deleteEvent,navigation }) => {
+    console.log(data);
     return (
         <View style={styles.card}>
             <View style={styles.EventDetails}>
                 <View style={{ justifyContent: 'center', alignItems: 'center', margin: 5 }}>
-                    <Text style={{ color: '#000000', fontSize: 22,fontWeight: 'bold' }}>Event Name</Text>
+                    <Text style={{ color: '#000000', fontSize: 22, fontWeight: 'bold' }}>{data.name}</Text>
                 </View>
                 <View style={{ flexDirection: 'row' }}>
                     <Icon name="update" size={24} color="black" />
                     <Text style={{ fontSize: 18, color: 'black', marginLeft: 10 }}>
-                        Date:17/7/2017
+                        Date:{data.date}
                     </Text>
                 </View>
                 <View style={{ flexDirection: 'row' }}>
                     <Icon name="camera-timer" size={24} color="black" />
                     <Text style={{ fontSize: 18, color: 'black', marginLeft: 10 }}>
-                        Time:12:30 AM
+                        Time:{data.time}
                     </Text>
                 </View>
                 <View style={{ flexDirection: 'row' }}>
                     {/* <Icon name="location-enter" size={24} color="black" /> */}
                     <Ionicons name="location" size={24} color="black" />
                     <Text style={{ fontSize: 18, color: 'black', marginLeft: 10 }}>
-                        Address: Stewart Duff Drive, Rongotai, Wellington 6022, New Zealand
+                        Address: {data.address}
                     </Text>
                 </View>
                 <View >
@@ -62,7 +63,7 @@ const Card = () => {
                             Description:
                         </Text>
                     </View>
-                    <Text>Wellington Airport is an international airport located in the suburb of Rongotai in Wellington, the capital city of New Zealand. It lies 3 NM or 5.5 km south-east from the city centre. It is a hub for Air New Zealand and Sounds Air.</Text>
+                    <Text>{data.description}</Text>
                 </View>
                 <View style={{ flexDirection: 'row', marginTop: 10, flex: 1 }}>
                     <LinearGradient
@@ -75,9 +76,9 @@ const Card = () => {
                             style={{
                                 alignItems: "center",
                                 padding: 10,
-                                flexDirection:'row'
+                                flexDirection: 'row'
                             }}
-                            onPress={() => { alert("Ok") }}
+                            onPress={() => {navigation.push('Dashbord');}}
                         >
                             <MaterialIcons name="account-tree" size={24} color="black" />
                             <Text style={{ color: 'black' }}>Details</Text>
@@ -95,7 +96,14 @@ const Card = () => {
                                 padding: 10,
                                 flexDirection: "row",
                             }}
-                            onPress={() => { alert("Ok") }}
+                            onPress={() => {
+                                deleteEvent(data).then((item) => {
+                                    alert("Event deleted successfully!");
+                                    navigation.push('Dashbord');
+                                }).catch((err) => {
+                                    alert(err.message);
+                                })
+                            }}
                         >
                             <MaterialIcons name="delete" size={24} color="black" />
                             <Text style={{ color: 'black' }}>Delete</Text>
@@ -110,6 +118,23 @@ const Card = () => {
 
 
 const Profile = ({ navigation }) => {
+    const { getMyEvent, deleteEvent } = useData();
+    const [event, setEvent] = useState([]);
+    useEffect(() => {
+        async function fetchData() {
+            try {
+                const events = await getMyEvent();
+                if (events.status == "success") {
+                    setEvent(events.message);
+                } else {
+                    alert(events.message);
+                }
+            } catch (error) {
+                alert(error);
+            }
+        }
+        fetchData();
+    }, [getMyEvent, setEvent]);
     return (
         <ImageBackground
             source={{ uri: 'https://raw.githubusercontent.com/AboutReact/sampleresource/master/crystal_background.jpg' }}
@@ -126,23 +151,23 @@ const Profile = ({ navigation }) => {
                             flex: 1,
                         }}>
                         <View style={{ marginTop: 10 }}>
-                            <View style={{margin:5,justifyContent:'center',alignItems:'center',fontWeight: 'bold'}}>
-                                <Text style={{fontSize:30}}>CarsClubNZ</Text>
+                            <View style={{ margin: 5, justifyContent: 'center', alignItems: 'center', fontWeight: 'bold' }}>
+                                <Text style={{ fontSize: 30 }}>CarsClubNZ</Text>
                             </View>
                             <View style={styles.userInfoSection}>
                                 <View style={{ flexDirection: 'row', marginTop: 15 }}>
                                     <Avatar.Image
-                                        source={images.guest}
+                                        source={{ uri:auth()?.currentUser.photoURL }}
                                         size={100}
                                     />
                                     <View style={{ marginLeft: 20 }}>
                                         <View style={styles.row}>
                                             <Icon name="account" size={20} color="black" />
-                                            <Text style={{ color: "#000000", marginLeft: 3 }}>Nouman Hayat</Text>
+                                            <Text style={{ color: "#000000", marginLeft: 3 }}>{auth()?.currentUser.displayName}</Text>
                                         </View>
                                         <View style={styles.row}>
                                             <Icon name="email" color="#000000" size={20} />
-                                            <Text style={{ color: "#000000", marginLeft: 3 }}>muhammadnouman@gmail.com</Text>
+                                            <Text style={{ color: "#000000", marginLeft: 3 }}>{auth()?.currentUser?.email}</Text>
                                         </View>
                                         <View style={styles.row}>
                                             <Icon name="account-box-multiple" size={20} color="black" />
@@ -155,10 +180,9 @@ const Profile = ({ navigation }) => {
                             <View style={styles.OrganizedEvent}>
                                 <Text style={{ fontSize: 30, color: '#00000' }}>Organized Event</Text>
                                 <View style={{ marginTop: 10 }}>
-                                    <Card />
-                                    <Card />
-                                    <Card />
-                                    <Card />
+                                    {event.map((item, index) => {
+                                        return (<Card key={index} data={item} deleteEvent={deleteEvent} navigation={navigation} />);
+                                    })}
                                 </View>
                             </View>
                         </View>
