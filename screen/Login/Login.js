@@ -47,7 +47,7 @@ const SignIn = ({ navigation }) => {
 
     return (
         <ImageBackground
-            source={{ uri: 'https://raw.githubusercontent.com/AboutReact/sampleresource/master/crystal_background.jpg' }}
+            source={images.background}
             resizeMode="cover"
             style={{
                 flex: 1,
@@ -65,7 +65,7 @@ const SignIn = ({ navigation }) => {
                                 alignItems: 'center',
                             }}>
                             <Image
-                                source={images.logo}
+                                source={images.logo2}
                                 resizeMode="contain"
                                 style={{
                                     height: 250,
@@ -101,11 +101,12 @@ const SignIn = ({ navigation }) => {
                                         height: 40.5,
                                         fontSize: 15,
                                         marginLeft: 2,
+                                        colors: 'black'
                                     }}
                                 />
                             </View>
 
-                            <Text style={{ fontSize: 14, marginLeft: 12, marginTop: 30 }}>
+                            <Text style={{ fontSize: 14, marginLeft: 12, marginTop: 30 ,color:'white'}}>
                                 Password
                             </Text>
                             <View style={styles.textBoxSign}>
@@ -128,6 +129,7 @@ const SignIn = ({ navigation }) => {
                                         height: 40.5,
                                         fontSize: 15,
                                         marginLeft: 5,
+                                        color: 'black'
                                     }}
                                 />
                                 <TouchableOpacity
@@ -157,20 +159,21 @@ const SignIn = ({ navigation }) => {
                                         top: 8,
                                         alignSelf: 'flex-end',
                                         right: 25,
+                                        color:'white',
                                     }}>
                                     Reset Password
                                 </Text>
                             </TouchableOpacity>
 
                             <TouchableOpacity onPress={() => {
-                                onSignIn(email,password).then((item)=>{
-                                    if(item.status=='success'){
+                                onSignIn(email, password).then((item) => {
+                                    if (item.status == 'success') {
                                         navigation.push('Dashbord');
-                                    }else{
+                                    } else {
                                         alert(item.message);
                                     }
-                                    
-                                }).catch((err)=>{
+
+                                }).catch((err) => {
                                     console.log(item);
                                 })
                                 // navigation.push('Dashbord')
@@ -265,6 +268,7 @@ const styles = StyleSheet.create({
         elevation: 1,
     },
     textBoxSign: {
+        color:"white",
         flexDirection: 'row',
         height: 45,
         marginHorizontal: 5,
@@ -273,6 +277,7 @@ const styles = StyleSheet.create({
         borderRadius: SIZES.radius,
         backgroundColor: COLORS.lightGray,
         elevation: 2,
+        
     },
-    textAbove: { fontSize: 14, marginLeft: 12 },
+    textAbove: { fontSize: 14, marginLeft: 12,color:'white' },
 });

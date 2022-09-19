@@ -115,12 +115,16 @@ export const attendEvent = async (data) => {
   await firestore().collection('Event').where('name', '==', data?.name).where('createdAt', '==', data?.createdAt).get().then(
     async function (querySnapshot) {
       await querySnapshot.forEach(function (doc) {
-        doc.ref.update({ attending: [...doc.data().attending, {name:auth()?.currentUser?.displayName,photoUrl:auth()?.currentUser?.photoURL,email:auth()?.currentUser?.email}] })
+        const check = doc.data().attending.map(e => e.user).indexOf(auth().currentUser?.uid);
+        if(check === -1){
+          doc.ref.update({ attending: [...doc.data().attending, {name:auth()?.currentUser?.displayName,photoUrl:auth()?.currentUser?.photoURL,email:auth()?.currentUser?.email,user:auth()?.currentUser?.uid}] })
+        }
       });
       console.log({ status: 'success', message: 'Event Attended!' })
       return ({ status: 'success', message: 'Event Attended!' });
     }
   ).catch((err) => {
     console.log({ status: 'fail', message: err });
+    return ({ status: 'fail', message: err });
   });
 }

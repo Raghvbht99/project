@@ -46,7 +46,7 @@ const SignUP = ({ navigation }) => {
 
     return (
         <ImageBackground
-            source={{ uri: 'https://raw.githubusercontent.com/AboutReact/sampleresource/master/crystal_background.jpg' }}
+            source={images.background }
             resizeMode="cover"
             style={{
                 flex: 1,
@@ -88,10 +88,11 @@ const SignUP = ({ navigation }) => {
                                         height: 40.5,
                                         fontSize: 15,
                                         marginLeft: 2,
+                                        color:'black'
                                     }}
                                 />
                             </View>
-                            <Text style={{ fontSize: 14, marginLeft: 12, marginTop: 30 }}>
+                            <Text style={{ fontSize: 14, marginLeft: 12, marginTop: 30,color:'white' }}>
                                 Email or Phone Number
                             </Text>
                             <View style={styles.textBoxSign}>
@@ -114,11 +115,12 @@ const SignUP = ({ navigation }) => {
                                         height: 40.5,
                                         fontSize: 15,
                                         marginLeft: 2,
+                                        colors:'black'
                                     }}
                                 />
                             </View>
 
-                            <Text style={{ fontSize: 14, marginLeft: 12, marginTop: 30 }}>
+                            <Text style={{ fontSize: 14, marginLeft: 12, marginTop: 30,color:'white' }}>
                                 Password
                             </Text>
                             <View style={styles.textBoxSign}>
@@ -130,6 +132,7 @@ const SignUP = ({ navigation }) => {
                                         height: 20,
                                         top: 10,
                                         alignSelf: 'flex-start',
+                                        color:'black',
                                     }}
                                 />
                                 <TextInput
@@ -162,7 +165,7 @@ const SignUP = ({ navigation }) => {
                                     )}
                                 </TouchableOpacity>
                             </View>
-                            <Text style={{ fontSize: 14, marginLeft: 12, marginTop: 30 }}>
+                            <Text style={{ fontSize: 14, marginLeft: 12, marginTop: 30,color:'white' }}>
                                 Re-Enter Password
                             </Text>
                             <View style={styles.textBoxSign}>
@@ -185,6 +188,7 @@ const SignUP = ({ navigation }) => {
                                         height: 40.5,
                                         fontSize: 15,
                                         marginLeft: 5,
+                                        color:'black'
                                     }}
                                 />
 
@@ -208,7 +212,7 @@ const SignUP = ({ navigation }) => {
                             </View>
 
                             {/* =========================================================================================================== */}
-                            <Text style={{ fontSize: 14, marginLeft: 12, marginTop: 30 }}>
+                            <Text style={{ fontSize: 14, marginLeft: 12, marginTop: 30,color:'white' }}>
                                 Family Name
                             </Text>
                             <View style={styles.textBoxSign}>
@@ -231,6 +235,7 @@ const SignUP = ({ navigation }) => {
                                         height: 40.5,
                                         fontSize: 15,
                                         marginLeft: 2,
+                                        color:'black'
                                     }}
                                 />
                             </View>
@@ -239,7 +244,7 @@ const SignUP = ({ navigation }) => {
 
                             {/* =================================================================================================================== */}
                             {/* =========================================================================================================== */}
-                            <Text style={{ fontSize: 14, marginLeft: 12, marginTop: 30 }}>
+                            <Text style={{ fontSize: 14, marginLeft: 12, marginTop: 30,color:'white' }}>
                                 Driver's License
                             </Text>
                             <View style={styles.textBoxSign}>
@@ -262,6 +267,7 @@ const SignUP = ({ navigation }) => {
                                         height: 40.5,
                                         fontSize: 15,
                                         marginLeft: 2,
+                                        color:'black'
                                     }}
                                 />
                             </View>
@@ -273,11 +279,11 @@ const SignUP = ({ navigation }) => {
                             <TouchableOpacity>
                                 <Text
                                     style={{
-                                        color: COLORS.darkgray,
                                         marginBottom: -15,
                                         top: 8,
                                         alignSelf: 'flex-end',
                                         right: 25,
+                                        color:'white'
                                     }}>
                                     Reset Password
                                 </Text>
@@ -389,5 +395,5 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.lightGray,
         elevation: 2,
     },
-    textAbove: { fontSize: 14, marginLeft: 12 },
+    textAbove: { fontSize: 14, marginLeft: 12,color:'white' },
 });

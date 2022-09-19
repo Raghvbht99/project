@@ -17,7 +17,7 @@ import {
     Text,
     TextInput,
     TouchableOpacity,
-    View,
+    View, Modal, ScrollViewComponent, FlatList
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { COLORS, images, SIZES, GRADIENTS } from '../../constants';
@@ -28,10 +28,11 @@ import { useData } from './../hooks';
 // eslint-disable-next-line react/prop-types,@typescript-eslint/ban-ts-comment
 // @ts-ignore
 // eslint-disable-next-line react/prop-types
-const Card = ({ data, deleteEvent,navigation }) => {
+const Card = ({ data, deleteEvent, navigation ,key}) => {
+    const [modalVisible, setModalVisible] = useState(false);
     console.log(data);
     return (
-        <View style={styles.card}>
+        <View key={key} style={styles.card}>
             <View style={styles.EventDetails}>
                 <View style={{ justifyContent: 'center', alignItems: 'center', margin: 5 }}>
                     <Text style={{ color: '#000000', fontSize: 22, fontWeight: 'bold' }}>{data.name}</Text>
@@ -78,7 +79,7 @@ const Card = ({ data, deleteEvent,navigation }) => {
                                 padding: 10,
                                 flexDirection: 'row'
                             }}
-                            onPress={() => {navigation.push('Dashbord');}}
+                            onPress={() => { setModalVisible(true) }}
                         >
                             <MaterialIcons name="account-tree" size={24} color="black" />
                             <Text style={{ color: 'black' }}>Details</Text>
@@ -111,7 +112,76 @@ const Card = ({ data, deleteEvent,navigation }) => {
                     </LinearGradient>
                 </View>
             </View>
+            <Modal
+                animationType="slide"
+                transparent={true}
+                visible={modalVisible}
+                onRequestClose={() => {
+                    setModalVisible(!modalVisible);
+                }}
+            >
+                <View style={styles.centeredView}>
+                    <View style={styles.modalView}>
+                        <View style={{ margin: 5 }}>
+                            <TouchableOpacity onPress={() => setModalVisible(false)}>
+                                <Image
+                                    style={{
+                                        width: 20,
+                                        height: 20,
+                                        borderRadius: 10
+                                    }}
+                                    source={require('../../assets/icons/close-icon.png')}
+                                />
+                            </TouchableOpacity>
+                        </View>
+                        {/* ====================================================================================== */}
+                        <View style={styles.modalContainer}>
+                            <FlatList
+                                data={data.attending}
+                                keyExtractor={({ item, index }) => index}
+                                renderItem={({ item, index, separators }) => (
+                                    <View key={index} style={{ flexDirection: 'row', padding: 15, marginBottom: 10, backgroundColor: '#D8D6E6', borderRadius: 30 }}>
+                                        <Avatar.Image
+                                            source={{
+                                                uri: item.photoUrl
+                                            }}
+                                            size={80}
+                                        />
+                                        <View>
+                                            <View style={{ marginLeft: 20 }}>
+                                                <Title
+                                                    style={
+                                                        {
+                                                            marginTop: 15,
 
+                                                            color: 'black'
+                                                        }
+                                                    }
+                                                >
+                                                    {item.name}
+                                                </Title>
+                                            </View>
+                                            <View style={{ marginLeft: 20 }}>
+                                                <Title
+                                                    style={
+                                                        {
+                                                            color: 'black'
+                                                        }
+                                                    }
+                                                >
+                                                    {item.email}
+                                                </Title>
+                                            </View>
+                                        </View>
+                                    </View>
+                                )}
+                            />
+
+                        </View>
+                        {/* ====================================================================================== */}
+                    </View>
+                </View>
+            </Modal>
         </View>
     )
 }
@@ -137,7 +207,7 @@ const Profile = ({ navigation }) => {
     }, [getMyEvent, setEvent]);
     return (
         <ImageBackground
-            source={{ uri: 'https://raw.githubusercontent.com/AboutReact/sampleresource/master/crystal_background.jpg' }}
+            source={images.background}
             resizeMode="cover"
             style={{
                 flex: 1,
@@ -152,33 +222,33 @@ const Profile = ({ navigation }) => {
                         }}>
                         <View style={{ marginTop: 10 }}>
                             <View style={{ margin: 5, justifyContent: 'center', alignItems: 'center', fontWeight: 'bold' }}>
-                                <Text style={{ fontSize: 30 }}>CarsClubNZ</Text>
+                                <Text style={{ fontSize: 30,color:'white' }}>CarsClubNZ</Text>
                             </View>
                             <View style={styles.userInfoSection}>
-                                <View style={{ flexDirection: 'row', marginTop: 15 }}>
+                                <View style={{ flexDirection: 'row', marginTop: 15}}>
                                     <Avatar.Image
-                                        source={{ uri:auth()?.currentUser.photoURL }}
+                                        source={{ uri: auth()?.currentUser.photoURL }}
                                         size={100}
                                     />
                                     <View style={{ marginLeft: 20 }}>
                                         <View style={styles.row}>
-                                            <Icon name="account" size={20} color="black" />
-                                            <Text style={{ color: "#000000", marginLeft: 3 }}>{auth()?.currentUser.displayName}</Text>
+                                            <Icon name="account" size={20} color="white" />
+                                            <Text style={{ color:'white' , marginLeft: 3 }}>{auth()?.currentUser.displayName}</Text>
                                         </View>
                                         <View style={styles.row}>
-                                            <Icon name="email" color="#000000" size={20} />
-                                            <Text style={{ color: "#000000", marginLeft: 3 }}>{auth()?.currentUser?.email}</Text>
+                                            <Icon name="email" color="white" size={20} />
+                                            <Text style={{ color:'white', marginLeft: 3 }}>{auth()?.currentUser?.email}</Text>
                                         </View>
                                         <View style={styles.row}>
-                                            <Icon name="account-box-multiple" size={20} color="black" />
-                                            <Text style={{ color: "#000000", marginLeft: 3 }}>17/07/1997</Text>
+                                            <Icon name="account-box-multiple" size={20} color="white" />
+                                            <Text style={{ color:'white', marginLeft: 3 }}>17/07/1997</Text>
                                         </View>
                                     </View>
                                 </View>
                             </View>
 
                             <View style={styles.OrganizedEvent}>
-                                <Text style={{ fontSize: 30, color: '#00000' }}>Organized Event</Text>
+                                <Text style={{ fontSize: 30, color: 'white' }}>Organized Event</Text>
                                 <View style={{ marginTop: 10 }}>
                                     {event.map((item, index) => {
                                         return (<Card key={index} data={item} deleteEvent={deleteEvent} navigation={navigation} />);
@@ -196,6 +266,32 @@ const Profile = ({ navigation }) => {
 export default Profile;
 
 const styles = StyleSheet.create({
+    modalContainer: {
+        margin: 10
+    },
+    centeredView: {
+        flex: 1,
+        justifyContent: 'center',
+        alignItems: 'center',
+        margin: 12
+
+    },
+    modalView: {
+        width: '100%',
+        margin: 20,
+        backgroundColor: 'white',
+        borderRadius: 20,
+        padding: 35,
+        // alignItems: "center",
+        // shadowColor: "#000",
+        shadowOffset: {
+            width: 0,
+            height: 2
+        },
+        shadowOpacity: 0.25,
+        shadowRadius: 4,
+        elevation: 5
+    },
     EventDetails: {
 
     },

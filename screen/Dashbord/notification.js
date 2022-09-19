@@ -24,7 +24,7 @@ import { useData } from './../hooks';
 // eslint-disable-next-line react/prop-types,@typescript-eslint/ban-ts-comment
 // @ts-ignore
 // eslint-disable-next-line react/prop-types
-const Card = ({data}) => {
+const Card = ({ data }) => {
     return (
         <View
             style={{
@@ -35,10 +35,10 @@ const Card = ({data}) => {
                 marginTop: 10,
             }}
         >
-            <Text style={{ fontSize: 20, fontWeight: 'bold' }}>
+            <Text style={{ fontSize: 20, fontWeight: 'bold',color:'black' }}>
                 {data.title}
             </Text>
-            <Text style={{ fontSize: 14, marginTop: 10 }}>{data.subtitle}</Text>
+            <Text style={{ fontSize: 14, marginTop: 10,color:'black' }}>{data.subtitle}</Text>
         </View>
     )
 }
@@ -64,8 +64,7 @@ const Screen = ({ navigation }) => {
     }, [getNotification, setNotification]);
     return (
         <ImageBackground
-            source={{ uri: 'https://raw.githubusercontent.com/AboutReact/sampleresource/master/crystal_background.jpg' }}
-            resizeMode="cover"
+            source={images.background} resizeMode="cover"
             style={{
                 flex: 1,
                 paddingVertical: SIZES.padding,
@@ -77,10 +76,10 @@ const Screen = ({ navigation }) => {
                             flex: 1,
                         }}>
                         <View style={{ margin: 5, justifyContent: 'center', alignItems: 'center', fontWeight: 'bold' }}>
-                            <Text style={{ fontSize: 30 }}>CarsClubNZ</Text>
+                            <Text style={{ fontSize: 30, color: 'white' }}>CarsClubNZ</Text>
                         </View>
                         {notification.map((item, index) => {
-                            return (<Card key={index} data={item}  navigation={navigation} />);
+                            return (<Card key={index} data={item} navigation={navigation} />);
                         })}
                     </View>
                 </KeyboardAwareScrollView>

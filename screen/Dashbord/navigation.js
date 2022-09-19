@@ -8,6 +8,7 @@ import Notification from './notification';
 import Home from './home';
 import Organize from './organize';
 import Profile from './profile';
+import Setting from './setting';
 const Tab = createBottomTabNavigator();
 export default function App() {
 
@@ -90,6 +91,24 @@ export default function App() {
                             <View style={{alignItems: 'center', justifyContent: 'center'}}>
                                 <Image
                                     source={icons.profile2}
+                                    style={{
+                                        width:30, height:30,tintColor: focused ? COLORS.red : COLORS.white,
+                                    }}
+                                />
+                            </View>
+                        );
+                    },
+                }}
+            />
+            <Tab.Screen
+                name={"Setting"}
+                component={Setting}
+                options={{
+                    tabBarIcon({ focused }) {
+                        return (
+                            <View style={{alignItems: 'center', justifyContent: 'center'}}>
+                                <Image
+                                    source={icons.stats}
                                     style={{
                                         width:30, height:30,tintColor: focused ? COLORS.red : COLORS.white,
                                     }}

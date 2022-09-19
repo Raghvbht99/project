@@ -23,7 +23,7 @@ import { COLORS, images, SIZES, GRADIENTS } from '../../constants';
 import { useData } from './../hooks';
 
 
-const SignIn = ({ navigation }) => {
+const Screen = ({ navigation }) => {
     // let currentUser = auth().currentUser;
     const { addEvent } = useData();
     const [name, setName] = React.useState('');
@@ -33,7 +33,7 @@ const SignIn = ({ navigation }) => {
     const [description, setDescription] = React.useState('');
     return (
         <ImageBackground
-            source={{ uri: 'https://raw.githubusercontent.com/AboutReact/sampleresource/master/crystal_background.jpg' }}
+            source={images.background}
             resizeMode="cover"
             style={{
                 flex: 1,
@@ -47,10 +47,10 @@ const SignIn = ({ navigation }) => {
                             flex: 1,
                         }}>
                         <View style={{ margin: 5, justifyContent: 'center', alignItems: 'center', fontWeight: 'bold' }}>
-                            <Text style={{ fontSize: 30 }}>CarsClubNZ</Text>
+                            <Text style={{ fontSize: 30,color:'white' }}>CarsClubNZ</Text>
                         </View>
                         <View >
-                            <Text style={{ fontSize: 22, marginLeft: 10 }}>Event Name</Text>
+                            <Text style={{ fontSize: 22, marginLeft: 10,color:'white' }}>Event Name</Text>
                             <View style={styles.textBoxSign}>
                                 <TextInput
                                     placeholder="Enter your Event Name"
@@ -61,12 +61,13 @@ const SignIn = ({ navigation }) => {
                                         height: 40.5,
                                         fontSize: 15,
                                         marginLeft: 2,
+                                        color:'black'
                                     }}
                                 />
                             </View>
                         </View>
                         <View >
-                            <Text style={{ fontSize: 22, marginLeft: 10 }}>Enter Date</Text>
+                            <Text style={{ fontSize: 22, marginLeft: 10,color:'white' }}>Enter Date</Text>
                             <View style={styles.textBoxSign}>
                                 <TextInput
                                     placeholder="17/7/2015"
@@ -77,12 +78,13 @@ const SignIn = ({ navigation }) => {
                                         height: 40.5,
                                         fontSize: 15,
                                         marginLeft: 2,
+                                        color:'black'
                                     }}
                                 />
                             </View>
                         </View>
                         <View >
-                            <Text style={{ fontSize: 22, marginLeft: 10 }}>Enter Time</Text>
+                            <Text style={{ fontSize: 22, marginLeft: 10,color:'white' }}>Enter Time</Text>
                             <View style={styles.textBoxSign}>
                                 <TextInput
                                     placeholder="2:30 PM"
@@ -93,12 +95,13 @@ const SignIn = ({ navigation }) => {
                                         height: 40.5,
                                         fontSize: 15,
                                         marginLeft: 2,
+                                        color:'black'
                                     }}
                                 />
                             </View>
                         </View>
                         <View >
-                            <Text style={{ fontSize: 22, marginLeft: 10 }}>Enter Address</Text>
+                            <Text style={{ fontSize: 22, marginLeft: 10, color:'white' }}>Enter Address</Text>
                             <View style={styles.textBoxSign}>
                                 <TextInput
                                     placeholder="Enter Address of event ..."
@@ -109,12 +112,13 @@ const SignIn = ({ navigation }) => {
                                         height: 40.5,
                                         fontSize: 15,
                                         marginLeft: 2,
+                                        color: 'black'
                                     }}
                                 />
                             </View>
                         </View>
                         <View >
-                            <Text style={{ fontSize: 22, marginLeft: 10 }}>Enter Description</Text>
+                            <Text style={{ fontSize: 22, marginLeft: 10,color:'white' }}>Enter Description</Text>
                             <View style={styles.textBoxSign}>
                                 <TextInput
                                     placeholder="Enter a description"
@@ -125,6 +129,7 @@ const SignIn = ({ navigation }) => {
                                         height: 40.5,
                                         fontSize: 15,
                                         marginLeft: 2,
+                                        color:'black'
                                     }}
                                 />
                             </View>
@@ -143,14 +148,14 @@ const SignIn = ({ navigation }) => {
                                     }}
                                     onPress={() => {
                                         if (name !== '' && date !== '' && time !== '' && address !== '' && description !== '') {
-                                            addEvent(name, date, time, address, description).then((item)=>{
-                                                if (item.status === 'success'){
+                                            addEvent(name, date, time, address, description).then((item) => {
+                                                if (item.status === 'success') {
                                                     alert("Event organize successfully!");
                                                     navigation.push('Dashbord');
                                                 } else {
                                                     alert(item.message);
                                                 }
-                                            }).catch((err)=>{
+                                            }).catch((err) => {
                                                 alert(item.message);
                                             });
                                         } else {
@@ -169,7 +174,7 @@ const SignIn = ({ navigation }) => {
     );
 };
 
-export default SignIn;
+export default Screen;
 
 const styles = StyleSheet.create({
     shadow: {

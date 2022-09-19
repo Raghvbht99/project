@@ -26,8 +26,8 @@ import { useData } from './../hooks';
 // eslint-disable-next-line react/prop-types,@typescript-eslint/ban-ts-comment
 // @ts-ignore
 // eslint-disable-next-line react/prop-types
-const UpcomingCard = ({data}) => {
-    const {attendEvent} =useData();
+const UpcomingCard = ({ data }) => {
+    const { attendEvent } = useData();
     return (
         <View style={styles.card}>
             <View style={styles.EventDetails}>
@@ -61,7 +61,7 @@ const UpcomingCard = ({data}) => {
                             Description:
                         </Text>
                     </View>
-                    <Text>{data.description}</Text>
+                    <Text style={{color:'black'}}>{data.description}</Text>
                 </View>
                 <View style={{ flexDirection: 'row', marginTop: 10, flex: 1 }}>
                     <LinearGradient
@@ -72,14 +72,14 @@ const UpcomingCard = ({data}) => {
                     >
                         <TouchableOpacity
                             style={{
-                                alignItems: "center",
+                                alignItems: 'center',
                                 padding: 10,
                                 flexDirection: 'row'
                             }}
-                            onPress={() => { attendEvent(data) }}
+                            onPress={() => { attendEvent(data); alert('Event Attended Successfully'); }}
                         >
-                            <MaterialIcons name="account-tree" size={24} color="black" />
-                            <Text style={{ color: 'black' }}>Attend</Text>
+                            <MaterialIcons name="account-tree" size={24} color="white" />
+                            <Text style={{ color: 'white' }}>Attend</Text>
                         </TouchableOpacity>
                     </LinearGradient>
 
@@ -97,7 +97,7 @@ const Screen = ({ navigation }) => {
         async function fetchData() {
             try {
                 const events = await getEvent();
-                if (events.status == "success") {
+                if (events.status == 'success') {
                     setEvent(events.message);
                 } else {
                     alert(events.message);
@@ -111,8 +111,7 @@ const Screen = ({ navigation }) => {
 
     return (
         <ImageBackground
-            source={{ uri: 'https://raw.githubusercontent.com/AboutReact/sampleresource/master/crystal_background.jpg' }}
-            resizeMode="cover"
+            source={images.background} resizeMode="cover"
             style={{
                 flex: 1,
                 paddingVertical: SIZES.padding,
@@ -124,11 +123,11 @@ const Screen = ({ navigation }) => {
                             flex: 1,
                         }}>
                         <View style={{ margin: 5, justifyContent: 'center', alignItems: 'center', fontWeight: 'bold' }}>
-                            <Text style={{ fontSize: 30 }}>CarsClubNZ</Text>
+                            <Text style={{ fontSize: 30 ,color:'white'}}>CarsClubNZ</Text>
                         </View>
                     </View>
                     <View style={styles.OrganizedEvent}>
-                        <Text style={{ fontSize: 30, color: '#00000' }}>UpComing Event</Text>
+                        <Text style={{ fontSize: 30, color: 'white' }}>UpComing Event</Text>
                         <View style={{ marginTop: 10 }}>
                             {event.map((item, index) => {
                                 return (<UpcomingCard key={index} data={item} navigation={navigation} />);
