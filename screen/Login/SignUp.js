@@ -293,8 +293,11 @@ const SignUP = ({ navigation }) => {
                                 //  navigation.push('Dashbord')
                                 if (email !== '' && password !== '' && rePassword !== '' && password == rePassword && displayName !== '' && driver !== '') {
                                     onSignUp(email, password, displayName, familyName, driver).then((item) => {
+                                        console.log(item)
                                         if (item.status === 'success') {
                                             navigation.push('Dashbord')
+                                             console.log(item);
+                                             
                                         } else {
                                             alert(item.status);
                                         }

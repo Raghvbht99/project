@@ -9,25 +9,40 @@ import analytics from '@react-native-firebase/analytics';
 
 export const currentUser = auth().currentUser;
 export const onSignUp = async (email: string, password: string, displayName: string, familyName: string, driver: string) => {
+  let returnResponse;
   let response;
   try {
     response = await auth().createUserWithEmailAndPassword(email, password).then(async (res) => {
       await auth().currentUser.updateProfile({
         displayName: displayName,
         photoURL: 'https://st.depositphotos.com/2218212/2938/i/450/depositphotos_29387653-stock-photo-facebook-profile.jpg',
+        DOB: '17/07/2022',
       });
-      console.log({ status: 'success', message: 'Account created successfully' });
-      return ({ status: 'success', message: 'Account created successfully' });
+      await firestore().collection('Users').add({
+        email: email,
+        displayName: displayName,
+        familyName: familyName,
+        driver: driver,
+        user:auth().currentUser.uid
+      }).then(function () {
+        // console.log({ status: 'success', message: 'User Added Successfully!' })
+      }).catch((Error) => {
+        returnResponse=({ status: 'fail', message: Error });
+      })
+
+       console.log({ status: 'success', message: 'Account created successfully' });
+       returnResponse = ({ status: 'success', message: 'Account created successfully' });
     }).catch(err => {
-      console.log({ status: 'fail', message: err });
-      return ({ status: 'fail', message: err });
+      console.log("check 1");
+      // console.log({ status: 'fail', message: err });
+      returnResponse = ({ status: 'fail', message: err });
     });
   } catch (error) {
     console.log({ status: 'fail', message: error });
-    return ({ status: 'fail', message: error });
+    returnResponse= ({ status: 'fail', message: error });
   }
-  return ({ status: 'success', message: 'Account created successfully' });
-
+  //  return ({ status: 'success', message: 'Account created successfully' });
+  return returnResponse;
 };
 export const onSignIn = async (email: string, password: string) => {
   let response;
@@ -53,8 +68,8 @@ export const addEvent = async (name: string, date: string, time: string, address
       createdAt: new Date(),
     });
     responce = await firestore().collection('notification').add({
-      title:auth().currentUser?.displayName+" "+" Add new Event",
-      subtitle:description,
+      title: auth().currentUser?.displayName + " " + " Add new Event",
+      subtitle: description,
     });
     console.log({ status: 'success', message: 'Post added!' });
     return ({ status: 'success', message: 'Post added!' });
@@ -116,8 +131,8 @@ export const attendEvent = async (data) => {
     async function (querySnapshot) {
       await querySnapshot.forEach(function (doc) {
         const check = doc.data().attending.map(e => e.user).indexOf(auth().currentUser?.uid);
-        if(check === -1){
-          doc.ref.update({ attending: [...doc.data().attending, {name:auth()?.currentUser?.displayName,photoUrl:auth()?.currentUser?.photoURL,email:auth()?.currentUser?.email,user:auth()?.currentUser?.uid}] })
+        if (check === -1) {
+          doc.ref.update({ attending: [...doc.data().attending, { name: auth()?.currentUser?.displayName, photoUrl: auth()?.currentUser?.photoURL, email: auth()?.currentUser?.email, user: auth()?.currentUser?.uid }] })
         }
       });
       console.log({ status: 'success', message: 'Event Attended!' })
