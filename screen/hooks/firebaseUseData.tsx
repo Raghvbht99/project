@@ -69,7 +69,7 @@ export const addEvent = async (name: string, date: string, time: string, address
       createdAt: new Date(),
     });
     responce = await firestore().collection('notification').add({
-      title: auth().currentUser?.displayName + " " + " Add new Event",
+      title: name,
       subtitle: description,
     });
     console.log({ status: 'success', message: 'Post added!' });

@@ -28,7 +28,14 @@ import { useData } from './../hooks';
 // eslint-disable-next-line react/prop-types,@typescript-eslint/ban-ts-comment
 // @ts-ignore
 // eslint-disable-next-line react/prop-types
-const Card = ({ data, deleteEvent, navigation ,key}) => {
+const Card= (props) => {
+    // props.data.index
+    // { data, deleteEvent, navigation ,key}
+    let data =props.data.item;
+    let deleteEvent=props.data.deleteEvent;
+    let navigation=props.data.navigation;
+    let key=props.data.key;
+
     const [modalVisible, setModalVisible] = useState(false);
     console.log(data);
     return (
@@ -186,7 +193,14 @@ const Card = ({ data, deleteEvent, navigation ,key}) => {
     )
 }
 
-
+// const Card =( props) => {
+//     console.log(props.data.item)
+//     let data =props.data.item;
+//     let deleteEvent=props.data.deleteEvent;
+//     let navigation=props.data.navigation;
+//     let key=props.data.key;
+//     return (<Text style={{color:'white'}}>hello</Text>)
+// }
 const Profile = ({ navigation }) => {
     const { getMyEvent, deleteEvent } = useData();
     const [event, setEvent] = useState([]);
@@ -195,6 +209,7 @@ const Profile = ({ navigation }) => {
             try {
                 const events = await getMyEvent();
                 if (events.status == "success") {
+                    console.log(events.message);
                     setEvent(events.message);
                 } else {
                     alert(events.message);
@@ -251,7 +266,8 @@ const Profile = ({ navigation }) => {
                                 <Text style={{ fontSize: 30, color: 'white' }}>Organized Event</Text>
                                 <View style={{ marginTop: 10 }}>
                                     {event.map((item, index) => {
-                                        return (<Card key={index} data={item} deleteEvent={deleteEvent} navigation={navigation} />);
+                                        console.log(index)
+                                        return (<Card data={{item,index,navigation,deleteEvent}} />);
                                     })}
                                 </View>
                             </View>

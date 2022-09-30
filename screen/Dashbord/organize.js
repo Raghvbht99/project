@@ -36,7 +36,7 @@ const Screen = ({ navigation }) => {
     const [description, setDescription] = React.useState('');
     const [inputVisible, setInputVisible] = React.useState(false);
     const [inputTimeVisible, setTimeInputVisible] = React.useState(false);
-    console.log(time)
+    console.log(String(time).substring(15, 21))
     return (
         <ImageBackground
             source={images.background}
@@ -123,9 +123,9 @@ const Screen = ({ navigation }) => {
                                         fontSize: 15,
                                         marginLeft: 2,
                                         color: 'black',
-                                        justifyContent: 'center',
+                                         justifyContent: 'center',
                                     }}>
-                                        <Text style={{ color: 'black' }} >{String(date).substring(0, 15)}</Text>
+                                        <Text style={{ color: 'black',fontSize:20 }} >{time!==''?String(time).substring(15, 21):'00:00 '}</Text>
                                     </View>
                                 </TouchableOpacity>
                             </View>
@@ -198,7 +198,7 @@ const Screen = ({ navigation }) => {
                                     }}
                                     onPress={() => {
                                         if (name !== '' && date !== '' && time !== '' && address !== '' && description !== '') {
-                                            addEvent(name, date, time, address, description).then((item) => {
+                                            addEvent(name, String(date).substring(0, 15), String(time).substring(15, 21), address, description).then((item) => {
                                                 if (item.status === 'success') {
                                                     alert("Event organize successfully!");
                                                     navigation.push('Dashbord');
