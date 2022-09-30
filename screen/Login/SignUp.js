@@ -12,16 +12,20 @@ import {
     TextInput,
     TouchableOpacity,
     View,
+    Modal
 } from 'react-native';
 import LinearGradient from 'react-native-linear-gradient';
 import { useData } from './../hooks';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 // import auth from '@react-native-firebase/auth';
 import { COLORS, images, SIZES, GRADIENTS } from '../../constants';
+import DatePicker from 'react-native-date-picker';
+import Icon from 'react-native-vector-icons/MaterialCommunityIcons';
 
 // eslint-disable-next-line react/prop-types,@typescript-eslint/ban-ts-comment
 // @ts-ignore
 // eslint-disable-next-line react/prop-types
+import ModalLayout from './ModalLayout';
 const SignUP = ({ navigation }) => {
     // let currentUser = auth().currentUser;
     const [data, setData] = React.useState({
@@ -36,6 +40,9 @@ const SignUP = ({ navigation }) => {
     const [displayName, setDisplayName] = React.useState('');
     const [familyName, setFamilyName] = React.useState('');
     const [driver, setDriver] = React.useState('');
+    const [date, setDate] = React.useState(new Date());
+    const [inputVisible, setInputVisible] = React.useState(false);
+    // console.log(String(date).substring(0,15))
     // replaces password text with * on active
     const updateSecureTextEntry = () => {
         setData({
@@ -46,7 +53,7 @@ const SignUP = ({ navigation }) => {
 
     return (
         <ImageBackground
-            source={images.background }
+            source={images.background}
             resizeMode="cover"
             style={{
                 flex: 1,
@@ -88,11 +95,11 @@ const SignUP = ({ navigation }) => {
                                         height: 40.5,
                                         fontSize: 15,
                                         marginLeft: 2,
-                                        color:'black'
+                                        color: 'black'
                                     }}
                                 />
                             </View>
-                            <Text style={{ fontSize: 14, marginLeft: 12, marginTop: 30,color:'white' }}>
+                            <Text style={{ fontSize: 14, marginLeft: 12, marginTop: 30, color: 'white' }}>
                                 Email or Phone Number
                             </Text>
                             <View style={styles.textBoxSign}>
@@ -115,12 +122,12 @@ const SignUP = ({ navigation }) => {
                                         height: 40.5,
                                         fontSize: 15,
                                         marginLeft: 2,
-                                        colors:'black'
+                                        colors: 'black'
                                     }}
                                 />
                             </View>
 
-                            <Text style={{ fontSize: 14, marginLeft: 12, marginTop: 30,color:'white' }}>
+                            <Text style={{ fontSize: 14, marginLeft: 12, marginTop: 30, color: 'white' }}>
                                 Password
                             </Text>
                             <View style={styles.textBoxSign}>
@@ -132,7 +139,7 @@ const SignUP = ({ navigation }) => {
                                         height: 20,
                                         top: 10,
                                         alignSelf: 'flex-start',
-                                        color:'black',
+                                        color: 'black',
                                     }}
                                 />
                                 <TextInput
@@ -165,7 +172,7 @@ const SignUP = ({ navigation }) => {
                                     )}
                                 </TouchableOpacity>
                             </View>
-                            <Text style={{ fontSize: 14, marginLeft: 12, marginTop: 30,color:'white' }}>
+                            <Text style={{ fontSize: 14, marginLeft: 12, marginTop: 30, color: 'white' }}>
                                 Re-Enter Password
                             </Text>
                             <View style={styles.textBoxSign}>
@@ -188,7 +195,7 @@ const SignUP = ({ navigation }) => {
                                         height: 40.5,
                                         fontSize: 15,
                                         marginLeft: 5,
-                                        color:'black'
+                                        color: 'black'
                                     }}
                                 />
 
@@ -212,7 +219,7 @@ const SignUP = ({ navigation }) => {
                             </View>
 
                             {/* =========================================================================================================== */}
-                            <Text style={{ fontSize: 14, marginLeft: 12, marginTop: 30,color:'white' }}>
+                            <Text style={{ fontSize: 14, marginLeft: 12, marginTop: 30, color: 'white' }}>
                                 Family Name
                             </Text>
                             <View style={styles.textBoxSign}>
@@ -235,16 +242,14 @@ const SignUP = ({ navigation }) => {
                                         height: 40.5,
                                         fontSize: 15,
                                         marginLeft: 2,
-                                        color:'black'
+                                        color: 'black'
                                     }}
                                 />
                             </View>
 
-
-
                             {/* =================================================================================================================== */}
                             {/* =========================================================================================================== */}
-                            <Text style={{ fontSize: 14, marginLeft: 12, marginTop: 30,color:'white' }}>
+                            <Text style={{ fontSize: 14, marginLeft: 12, marginTop: 30, color: 'white' }}>
                                 Driver's License
                             </Text>
                             <View style={styles.textBoxSign}>
@@ -267,13 +272,65 @@ const SignUP = ({ navigation }) => {
                                         height: 40.5,
                                         fontSize: 15,
                                         marginLeft: 2,
-                                        color:'black'
+                                        color: 'black'
                                     }}
                                 />
                             </View>
 
+                            {/* =================================================================================================================== */}
+                            {/* =========================================================================================================== */}
+                            <Text style={{ fontSize: 14, marginLeft: 12, marginTop: 30, color: 'white' }}>
+                                Date Of Birth
+                            </Text>
+                            <View style={styles.textBoxSign}>
+                                {/* <TouchableOpacity onPress={()=>alert("ok")}> */}
+                                <Image
+                                    source={images.person}
+                                    resizeMode="contain"
+                                    style={{
+                                        width: 26,
+                                        height: 40,
+                                        right: 2,
+                                        alignSelf: 'flex-start',
+                                    }}
+                                />
+                                <TouchableOpacity onPress={() => {
+                                    setInputVisible(true);
+                                }}>
+                                    <View style={{
+                                        flex: 1,
+                                        height: 40.5,
+                                        fontSize: 15,
+                                        marginLeft: 2,
+                                        color: 'black',
+                                        justifyContent: 'center',
+                                    }}>
+                                        <Text style={{color:'black',fontSize:17}} >{String(date).substring(0,15)}</Text>
+                                    </View>
+                                </TouchableOpacity>
+                                {/* </TouchableOpacity> */}
+                            </View>
+                            {/* ======================================================================== */}
+                            <Modal
+                                animationType="slide"
+                                transparent={true}
+                                visible={inputVisible}
+                                onRequestClose={() => {
+                                    setInputVisible(!inputVisible);
+                                }}
+                            >
+                                <ModalLayout
+                                    onClose={() => {
+                                        setInputVisible(!inputVisible);
+                                    }}
+                                >
+                                    <View style={{ alignItems: 'center' }}>
+                                        <DatePicker mode={'date'} date={date} onDateChange={setDate} />
+                                    </View>
+                                </ModalLayout>
+                            </Modal>
 
-
+                            {/* ============================================================================== */}
                             {/* =================================================================================================================== */}
 
                             <TouchableOpacity>
@@ -283,7 +340,7 @@ const SignUP = ({ navigation }) => {
                                         top: 8,
                                         alignSelf: 'flex-end',
                                         right: 25,
-                                        color:'white'
+                                        color: 'white'
                                     }}>
                                     Reset Password
                                 </Text>
@@ -292,12 +349,12 @@ const SignUP = ({ navigation }) => {
                             <TouchableOpacity onPress={() => {
                                 //  navigation.push('Dashbord')
                                 if (email !== '' && password !== '' && rePassword !== '' && password == rePassword && displayName !== '' && driver !== '') {
-                                    onSignUp(email, password, displayName, familyName, driver).then((item) => {
+                                    onSignUp(String(date).substring(0,15),email, password, displayName, familyName, driver).then((item) => {
                                         console.log(item)
                                         if (item.status === 'success') {
                                             navigation.push('Dashbord')
-                                             console.log(item);
-                                             
+                                            console.log(item);
+
                                         } else {
                                             alert(item.status);
                                         }
@@ -398,5 +455,11 @@ const styles = StyleSheet.create({
         backgroundColor: COLORS.lightGray,
         elevation: 2,
     },
-    textAbove: { fontSize: 14, marginLeft: 12,color:'white' },
+    textAbove: { fontSize: 14, marginLeft: 12, color: 'white' },
 });
+// import React, {useState} from 'react';
+// import DatePicker from 'react-native-date-picker';
+// export default () => {
+//   const [date, setDate] = useState(new Date());
+//   return <DatePicker mode={'date'} date={date} onDateChange={setDate} />;
+// };

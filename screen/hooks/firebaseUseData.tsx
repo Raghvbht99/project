@@ -8,7 +8,7 @@ import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import analytics from '@react-native-firebase/analytics';
 
 export const currentUser = auth().currentUser;
-export const onSignUp = async (email: string, password: string, displayName: string, familyName: string, driver: string) => {
+export const onSignUp = async (DOB: string,email: string, password: string, displayName: string, familyName: string, driver: string) => {
   let returnResponse;
   let response;
   try {
@@ -23,6 +23,7 @@ export const onSignUp = async (email: string, password: string, displayName: str
         displayName: displayName,
         familyName: familyName,
         driver: driver,
+        DOB:DOB,
         user:auth().currentUser.uid
       }).then(function () {
         // console.log({ status: 'success', message: 'User Added Successfully!' })

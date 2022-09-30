@@ -11,7 +11,7 @@ export const DataProvider = ({children}: {children: React.ReactNode}) => {
     deleteEvent,
     getNotification,
     getEvent,
-    attendEvent
+    attendEvent,
   };
   return (
     <DataContext.Provider value={contextValue}>{children}</DataContext.Provider>

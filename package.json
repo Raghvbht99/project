@@ -13,6 +13,7 @@
     "build": "cd android && gradlew assembleDebug && cd ../"
   },
   "dependencies": {
+    "@react-native-community/datetimepicker": "^6.4.1",
     "@react-native-firebase/analytics": "^15.6.0",
     "@react-native-firebase/app": "^15.6.0",
     "@react-native-firebase/auth": "^15.6.0",
@@ -25,6 +26,8 @@
     "npm": "^8.19.1",
     "react": "18.1.0",
     "react-native": "0.70.0",
+    "react-native-date-picker": "^4.2.5",
+    "react-native-fast-image": "^8.6.1",
     "react-native-gesture-handler": "^2.6.0",
     "react-native-keyboard-aware-scroll-view": "^0.9.5",
     "react-native-linear-gradient": "^2.6.2",
