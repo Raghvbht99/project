@@ -17,20 +17,26 @@ import {
     TextInput,
     TouchableOpacity,
     View,
+    Modal
 } from 'react-native';
 import { KeyboardAwareScrollView } from 'react-native-keyboard-aware-scroll-view';
 import { COLORS, images, SIZES, GRADIENTS } from '../../constants';
 import { useData } from './../hooks';
+import ModalLayout from './ModalLayout';
+import DatePicker from 'react-native-date-picker';
 
 
 const Screen = ({ navigation }) => {
     // let currentUser = auth().currentUser;
     const { addEvent } = useData();
     const [name, setName] = React.useState('');
-    const [date, setDate] = React.useState('');
+    const [date, setDate] = React.useState(new Date());
     const [time, setTime] = React.useState('');
     const [address, setAddress] = React.useState('');
     const [description, setDescription] = React.useState('');
+    const [inputVisible, setInputVisible] = React.useState(false);
+    const [inputTimeVisible, setTimeInputVisible] = React.useState(false);
+    console.log(time)
     return (
         <ImageBackground
             source={images.background}
@@ -47,10 +53,10 @@ const Screen = ({ navigation }) => {
                             flex: 1,
                         }}>
                         <View style={{ margin: 5, justifyContent: 'center', alignItems: 'center', fontWeight: 'bold' }}>
-                            <Text style={{ fontSize: 30,color:'white' }}>CarsClubNZ</Text>
+                            <Text style={{ fontSize: 30, color: 'white' }}>CarsClubNZ</Text>
                         </View>
                         <View >
-                            <Text style={{ fontSize: 22, marginLeft: 10,color:'white' }}>Event Name</Text>
+                            <Text style={{ fontSize: 22, marginLeft: 10, color: 'white' }}>Event Name</Text>
                             <View style={styles.textBoxSign}>
                                 <TextInput
                                     placeholder="Enter your Event Name"
@@ -61,47 +67,91 @@ const Screen = ({ navigation }) => {
                                         height: 40.5,
                                         fontSize: 15,
                                         marginLeft: 2,
-                                        color:'black'
+                                        color: 'black'
                                     }}
                                 />
                             </View>
                         </View>
                         <View >
-                            <Text style={{ fontSize: 22, marginLeft: 10,color:'white' }}>Enter Date</Text>
+                            <Text style={{ fontSize: 22, marginLeft: 10, color: 'white' }}>Enter Date</Text>
                             <View style={styles.textBoxSign}>
-                                <TextInput
-                                    placeholder="17/7/2015"
-                                    onChangeText={value => setDate(value)}
-                                    autoCapitalize={'none'}
-                                    style={{
+                                {/* <TouchableOpacity onPress={()=>alert("ok")}> */}
+                                <TouchableOpacity onPress={() => {
+                                    setInputVisible(true);
+                                }}>
+                                    <View style={{
                                         flex: 1,
                                         height: 40.5,
                                         fontSize: 15,
                                         marginLeft: 2,
-                                        color:'black'
-                                    }}
-                                />
+                                        color: 'black',
+                                        justifyContent: 'center',
+                                    }}>
+                                        <Text style={{ color: 'black' }} >{String(date).substring(0, 15)}</Text>
+                                    </View>
+                                </TouchableOpacity>
+                                {/* </TouchableOpacity> */}
                             </View>
                         </View>
+                        <Modal
+                            animationType="slide"
+                            transparent={true}
+                            visible={inputVisible}
+                            onRequestClose={() => {
+                                setInputVisible(!inputVisible);
+                            }}
+                        >
+                            <ModalLayout
+                                onClose={() => {
+                                    setInputVisible(!inputVisible);
+                                }}
+                            >
+                                <View style={{ alignItems: 'center' }}>
+                                    <DatePicker mode={'date'} date={date} onDateChange={setDate} />
+                                </View>
+                            </ModalLayout>
+                        </Modal>
                         <View >
-                            <Text style={{ fontSize: 22, marginLeft: 10,color:'white' }}>Enter Time</Text>
+                            <Text style={{ fontSize: 22, marginLeft: 10, color: 'white' }}>Enter Time</Text>
                             <View style={styles.textBoxSign}>
-                                <TextInput
-                                    placeholder="2:30 PM"
-                                    onChangeText={value => setTime(value)}
-                                    autoCapitalize={'none'}
-                                    style={{
+                            <TouchableOpacity onPress={() => {
+                                    setTimeInputVisible(true);
+                                }}>
+                                    <View style={{
                                         flex: 1,
                                         height: 40.5,
                                         fontSize: 15,
                                         marginLeft: 2,
-                                        color:'black'
-                                    }}
-                                />
+                                        color: 'black',
+                                        justifyContent: 'center',
+                                    }}>
+                                        <Text style={{ color: 'black' }} >{String(date).substring(0, 15)}</Text>
+                                    </View>
+                                </TouchableOpacity>
                             </View>
                         </View>
+                        <Modal
+                            animationType="slide"
+                            transparent={true}
+                            visible={inputTimeVisible}
+                            onRequestClose={() => {
+                                setTimeInputVisible(!inputTimeVisible);
+                            }}
+                        >
+                            <ModalLayout
+                                onClose={() => {
+                                    setTimeInputVisible(!inputTimeVisible);
+                                }}
+                            >
+                                <View style={{ alignItems: 'center' }}>
+                                    {/* <DatePicker mode={'time'} date={time} onDateChange={setTime} /> */}
+                                    <DatePicker mode={'time'} date={date} onDateChange={setTime} />
+
+                                </View>
+                            </ModalLayout>
+                        </Modal>
                         <View >
-                            <Text style={{ fontSize: 22, marginLeft: 10, color:'white' }}>Enter Address</Text>
+                            <Text style={{ fontSize: 22, marginLeft: 10, color: 'white' }}>Enter Address</Text>
                             <View style={styles.textBoxSign}>
                                 <TextInput
                                     placeholder="Enter Address of event ..."
@@ -118,7 +168,7 @@ const Screen = ({ navigation }) => {
                             </View>
                         </View>
                         <View >
-                            <Text style={{ fontSize: 22, marginLeft: 10,color:'white' }}>Enter Description</Text>
+                            <Text style={{ fontSize: 22, marginLeft: 10, color: 'white' }}>Enter Description</Text>
                             <View style={styles.textBoxSign}>
                                 <TextInput
                                     placeholder="Enter a description"
@@ -129,7 +179,7 @@ const Screen = ({ navigation }) => {
                                         height: 40.5,
                                         fontSize: 15,
                                         marginLeft: 2,
-                                        color:'black'
+                                        color: 'black'
                                     }}
                                 />
                             </View>
