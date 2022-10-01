@@ -61,6 +61,7 @@ const Screen = ({ navigation }) => {
                                 <TextInput
                                     placeholder="Enter your Event Name"
                                     onChangeText={value => setName(value)}
+                                    placeholderTextColor="black" 
                                     autoCapitalize={'none'}
                                     style={{
                                         flex: 1,
@@ -107,7 +108,7 @@ const Screen = ({ navigation }) => {
                                 }}
                             >
                                 <View style={{ alignItems: 'center' }}>
-                                    <DatePicker mode={'date'} date={date} onDateChange={setDate} />
+                                    <DatePicker textColor={'black'} mode={'date'} date={date} onDateChange={setDate} />
                                 </View>
                             </ModalLayout>
                         </Modal>
@@ -145,7 +146,7 @@ const Screen = ({ navigation }) => {
                             >
                                 <View style={{ alignItems: 'center' }}>
                                     {/* <DatePicker mode={'time'} date={time} onDateChange={setTime} /> */}
-                                    <DatePicker mode={'time'} date={date} onDateChange={setTime} />
+                                    <DatePicker textColor={'black'} mode={'time'} date={date} onDateChange={setTime} />
 
                                 </View>
                             </ModalLayout>
@@ -155,6 +156,7 @@ const Screen = ({ navigation }) => {
                             <View style={styles.textBoxSign}>
                                 <TextInput
                                     placeholder="Enter Address of event ..."
+                                    placeholderTextColor="black" 
                                     onChangeText={value => setAddress(value)}
                                     autoCapitalize={'none'}
                                     style={{
@@ -172,6 +174,7 @@ const Screen = ({ navigation }) => {
                             <View style={styles.textBoxSign}>
                                 <TextInput
                                     placeholder="Enter a description"
+                                    placeholderTextColor="black" 
                                     onChangeText={value => setDescription(value)}
                                     autoCapitalize={'none'}
                                     style={{

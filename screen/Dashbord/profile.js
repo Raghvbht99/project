@@ -86,7 +86,7 @@ const Card= (props) => {
                                 padding: 10,
                                 flexDirection: 'row'
                             }}
-                            onPress={() => { setModalVisible(true) }}
+                            onPress={() => { setModalVisible(true); }}
                         >
                             <MaterialIcons name="account-tree" size={24} color="black" />
                             <Text style={{ color: 'black' }}>Details</Text>
@@ -105,12 +105,7 @@ const Card= (props) => {
                                 flexDirection: "row",
                             }}
                             onPress={() => {
-                                deleteEvent(data).then((item) => {
-                                    alert("Event deleted successfully!");
-                                    navigation.push('Dashbord');
-                                }).catch((err) => {
-                                    alert(err.message);
-                                })
+                               alert("Under Process");
                             }}
                         >
                             <MaterialIcons name="delete" size={24} color="black" />
@@ -135,7 +130,7 @@ const Card= (props) => {
                                     navigation.push('Dashbord');
                                 }).catch((err) => {
                                     alert(err.message);
-                                })
+                                });
                             }}
                         >
                             <MaterialIcons name="delete" size={24} color="black" />
@@ -215,8 +210,8 @@ const Card= (props) => {
                 </View>
             </Modal>
         </View>
-    )
-}
+    );
+};
 const CardAttending= (props) => {
     // props.data.index
     // { data, deleteEvent, navigation ,key}
@@ -281,7 +276,7 @@ const CardAttending= (props) => {
                                     navigation.push('Dashbord');
                                 }).catch((err) => {
                                     alert(err.message);
-                                })
+                                });
                             }}
                         >
                             <MaterialIcons name="delete" size={24} color="black" />
@@ -361,8 +356,8 @@ const CardAttending= (props) => {
                 </View>
             </Modal>
         </View>
-    )
-}
+    );
+};
 
 const Profile = ({ navigation }) => {
     const { getMyEvent, deleteEvent,getMyAttendEvent,deleteMyAttendEvent } = useData();
@@ -436,7 +431,7 @@ const Profile = ({ navigation }) => {
                                 <Text style={{ fontSize: 30, color: 'white' }}>Organized Event</Text>
                                 <View style={{ marginTop: 10 }}>
                                     {event.map((item, index) => {
-                                        console.log(index)
+                                        console.log(index);
                                         return (<Card key={index} data={{item,index,navigation,deleteEvent}} />);
                                     })}
                                 </View>
@@ -445,7 +440,7 @@ const Profile = ({ navigation }) => {
                                 <Text style={{ fontSize: 30, color: 'white' }}>Attending Event</Text>
                                 <View style={{ marginTop: 10 }}>
                                     {attendEvent.map((item, index) => {
-                                        console.log(index)
+                                        console.log(index);
                                         return (<CardAttending key={index} data={{item,index,navigation,deleteMyAttendEvent}} />);
                                     })}
                                 </View>

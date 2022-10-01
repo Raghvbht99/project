@@ -94,14 +94,15 @@ const SignIn = ({ navigation }) => {
                                 />
                                 <TextInput
                                     placeholder="Enter your email or phone number..."
+                                    placeholderTextColor="black" 
                                     onChangeText={value => setEmail(value)}
                                     autoCapitalize={'none'}
                                     style={{
                                         flex: 1,
                                         height: 40.5,
                                         fontSize: 15,
-                                        marginLeft: 2,
-                                        colors: 'black'
+                                        marginLeft: 5,
+                                        color: 'black',
                                     }}
                                 />
                             </View>
@@ -122,6 +123,7 @@ const SignIn = ({ navigation }) => {
                                 />
                                 <TextInput
                                     placeholder="Enter your password..."
+                                    placeholderTextColor="black" 
                                     secureTextEntry={data.secureTextEntry ? true : false}
                                     onChangeText={value => setPassword(value)}
                                     style={{
@@ -129,7 +131,7 @@ const SignIn = ({ navigation }) => {
                                         height: 40.5,
                                         fontSize: 15,
                                         marginLeft: 5,
-                                        color: 'black'
+                                        color: 'black',
                                     }}
                                 />
                                 <TouchableOpacity

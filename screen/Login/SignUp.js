@@ -89,6 +89,7 @@ const SignUP = ({ navigation }) => {
                                 <TextInput
                                     placeholder="Please enter your name"
                                     onChangeText={value => setDisplayName(value)}
+                                    placeholderTextColor="black"
                                     autoCapitalize={'none'}
                                     style={{
                                         flex: 1,
@@ -116,6 +117,7 @@ const SignUP = ({ navigation }) => {
                                 <TextInput
                                     placeholder="Enter your email or phone number..."
                                     onChangeText={value => setEmail(value)}
+                                    placeholderTextColor="black"
                                     autoCapitalize={'none'}
                                     style={{
                                         flex: 1,
@@ -146,6 +148,7 @@ const SignUP = ({ navigation }) => {
                                     placeholder="Enter your password..."
                                     secureTextEntry={data.secureTextEntry ? true : false}
                                     onChangeText={value => setPassword(value)}
+                                    placeholderTextColor="black"
                                     style={{
                                         flex: 1,
                                         height: 40.5,
@@ -190,6 +193,7 @@ const SignUP = ({ navigation }) => {
                                     placeholder="Re-Enter Password ..."
                                     secureTextEntry={data.secureTextEntry ? true : false}
                                     onChangeText={value => setRePassword(value)}
+                                    placeholderTextColor="black"
                                     style={{
                                         flex: 1,
                                         height: 40.5,
@@ -237,6 +241,7 @@ const SignUP = ({ navigation }) => {
                                     placeholder="Family Name..."
                                     onChangeText={value => setFamilyName(value)}
                                     autoCapitalize={'none'}
+                                    placeholderTextColor="black"
                                     style={{
                                         flex: 1,
                                         height: 40.5,
@@ -266,6 +271,7 @@ const SignUP = ({ navigation }) => {
                                 <TextInput
                                     placeholder="Driver's License..."
                                     onChangeText={value => setDriver(value)}
+                                    placeholderTextColor="black"
                                     autoCapitalize={'none'}
                                     style={{
                                         flex: 1,
@@ -325,7 +331,7 @@ const SignUP = ({ navigation }) => {
                                     }}
                                 >
                                     <View style={{ alignItems: 'center' }}>
-                                        <DatePicker mode={'date'} date={date} onDateChange={setDate} />
+                                        <DatePicker textColor={'black'} mode={'date'} date={date} onDateChange={setDate} />
                                     </View>
                                 </ModalLayout>
                             </Modal>
