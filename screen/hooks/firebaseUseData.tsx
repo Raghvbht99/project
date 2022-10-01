@@ -196,3 +196,18 @@ export const deleteMyAttendEvent = async (data) => {
     console.log({ status: 'fail', message: err });
   });
 };
+export const updateEvent = async (data,name,date,time,address,description) =>{
+  console.log(data);
+  await firestore().collection('Event').where('address', '==', data.address).where('name', '==', data.name).where('time', '==', data.time).get().then(
+    async function (querySnapshot) {
+      querySnapshot.forEach(function (doc) {
+        doc.ref.update({name,date,time,address,description});
+        // doc.ref.delete();
+      });
+      // console.log({ status: 'success', message: 'Post Deleted!' })
+      return ({ status: 'success', message: 'updated!' });
+    }
+  ).catch((err) => {
+    console.log({ status: 'fail', message: err });
+  });
+}

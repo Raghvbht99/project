@@ -33,11 +33,12 @@ import ModalLayout from './ModalLayout';
 const Card = (props) => {
     // props.data.index
     // { data, deleteEvent, navigation ,key}
+    const {updateEvent} = useData();
     let data = props.data.item;
     let deleteEvent = props.data.deleteEvent;
     let navigation = props.data.navigation;
     let key = props.data.key;
-    const [name, setName] = React.useState('');
+    const [name, setName] = React.useState('my name');
     const [date, setDate] = React.useState(new Date());
     const [time, setTime] = React.useState('');
     const [address, setAddress] = React.useState('');
@@ -46,7 +47,6 @@ const Card = (props) => {
     const [modalVisible, setModalVisible] = useState(false);
     const [inputVisible, setInputVisible] = React.useState(false);
     const [inputTimeVisible, setTimeInputVisible] = React.useState(false);
-    console.log(data);
     return (
         <View key={key} style={styles.card}>
             <View style={styles.EventDetails}>
@@ -114,6 +114,11 @@ const Card = (props) => {
                                 flexDirection: "row",
                             }}
                             onPress={() => {
+                                setName(data.name);
+                                setDate(data.address)
+                                setTime(data.time)
+                                setAddress(data.address)
+                                setDescription(data.description)
                                 setEditVisible(true);
                             }}
                         >
@@ -240,6 +245,7 @@ const Card = (props) => {
                                     onChangeText={value => setName(value)}
                                     placeholderTextColor="gray"
                                     autoCapitalize={'none'}
+                                    value={name}
                                     style={{
                                         flex: 1,
                                         height: 40.5,
@@ -257,6 +263,7 @@ const Card = (props) => {
                                     placeholder="Enter Date"
                                     onChangeText={value => setDate(value)}
                                     placeholderTextColor="gray"
+                                    value={date}
                                     autoCapitalize={'none'}
                                     style={{
                                         flex: 1,
@@ -276,6 +283,7 @@ const Card = (props) => {
                                     onChangeText={value => setTime(value)}
                                     placeholderTextColor="gray"
                                     autoCapitalize={'none'}
+                                    value={time}
                                     style={{
                                         flex: 1,
                                         height: 40.5,
@@ -293,6 +301,7 @@ const Card = (props) => {
                                     placeholder="Enter Address of event ..."
                                     placeholderTextColor="gray"
                                     onChangeText={value => setAddress(value)}
+                                    value={address}
                                     autoCapitalize={'none'}
                                     style={{
                                         flex: 1,
@@ -311,6 +320,7 @@ const Card = (props) => {
                                     placeholder="Enter a description"
                                     placeholderTextColor="gray"
                                     onChangeText={value => setDescription(value)}
+                                    value={description}
                                     autoCapitalize={'none'}
                                     style={{
                                         flex: 1,
@@ -335,9 +345,12 @@ const Card = (props) => {
                                         padding: 10,
                                     }}
                                     onPress={() => {
-                                        console.log(data)
+                                        
                                         if (name !== '' && date !== '' && time !== '' && address !== '' && description !== '') {
-                                            console.log(data)
+                                            updateEvent(data,name,date,time,address,description).then((item)=>{
+                                                alert("update event");
+                                                navigation.push("Dashbord");
+                                            })
                                         } else {
                                             alert('Please enter a valid details');
                                         }
@@ -363,7 +376,7 @@ const CardAttending = (props) => {
     let key = props.data.key;
 
     const [modalVisible, setModalVisible] = useState(false);
-    console.log(data);
+
     return (
         <View key={key} style={styles.card}>
             <View style={styles.EventDetails}>
