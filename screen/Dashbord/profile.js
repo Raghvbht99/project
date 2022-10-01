@@ -221,7 +221,7 @@ const CardAttending= (props) => {
     // props.data.index
     // { data, deleteEvent, navigation ,key}
     let data =props.data.item;
-    let deleteEvent=props.data.deleteEvent;
+    let deleteEvent=props.data.deleteMyAttendEvent;
     let navigation=props.data.navigation;
     let key=props.data.key;
 
@@ -365,7 +365,7 @@ const CardAttending= (props) => {
 }
 
 const Profile = ({ navigation }) => {
-    const { getMyEvent, deleteEvent,getMyAttendEvent } = useData();
+    const { getMyEvent, deleteEvent,getMyAttendEvent,deleteMyAttendEvent } = useData();
     const [event, setEvent] = useState([]);
     const [attendEvent,setAttendEvent] = useState([]);
     useEffect(() => {
@@ -373,14 +373,12 @@ const Profile = ({ navigation }) => {
             try {
                 const events = await getMyEvent();
                 if (events.status == "success") {
-                    console.log(events.message);
                     setEvent(events.message);
                 } else {
                     alert(events.message);
                 }
                 const eventAttend = await getMyAttendEvent();
                 if (eventAttend.status == "success") {
-                    console.log(eventAttend.message);
                     setAttendEvent(eventAttend.message);
                 } else {
                     alert(eventAttend.message);
@@ -448,7 +446,7 @@ const Profile = ({ navigation }) => {
                                 <View style={{ marginTop: 10 }}>
                                     {attendEvent.map((item, index) => {
                                         console.log(index)
-                                        return (<CardAttending key={index} data={{item,index,navigation,deleteEvent}} />);
+                                        return (<CardAttending key={index} data={{item,index,navigation,deleteMyAttendEvent}} />);
                                     })}
                                 </View>
                             </View>

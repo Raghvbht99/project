@@ -24,12 +24,12 @@ export const onSignUp = async (DOB: string, email: string, password: string, dis
         familyName: familyName,
         driver: driver,
         DOB: DOB,
-        user: auth().currentUser.uid
+        user: auth().currentUser.uid,
       }).then(function () {
         // console.log({ status: 'success', message: 'User Added Successfully!' })
       }).catch((Error) => {
         returnResponse = ({ status: 'fail', message: Error });
-      })
+      });
 
       console.log({ status: 'success', message: 'Account created successfully' });
       returnResponse = ({ status: 'success', message: 'Account created successfully' });
@@ -89,7 +89,7 @@ export const getMyEvent = async () => {
     console.log({ status: 'fail', message: error });
     return ({ status: 'fail', message: error });
   }
-}
+};
 export const deleteEvent = async (data) => {
   console.log(data);
   await firestore().collection('Event').where('user', '==', auth().currentUser?.uid).where('name', '==', data?.name).where('createdAt', '==', data?.createdAt).get().then(
@@ -97,13 +97,13 @@ export const deleteEvent = async (data) => {
       await querySnapshot.forEach(function (doc) {
         doc.ref.delete();
       });
-      console.log({ status: 'success', message: 'Post Deleted!' })
+      console.log({ status: 'success', message: 'Post Deleted!' });
       return ({ status: 'success', message: 'Post Deleted!' });
     }
   ).catch((err) => {
     console.log({ status: 'fail', message: err });
   });
-}
+};
 export const getNotification = async () => {
   let responce;
   try {
@@ -114,7 +114,7 @@ export const getNotification = async () => {
     console.log({ status: 'fail', message: error });
     return ({ status: 'fail', message: error });
   }
-}
+};
 export const getEvent = async () => {
   let responce;
   try {
@@ -125,7 +125,7 @@ export const getEvent = async () => {
     console.log({ status: 'fail', message: error });
     return ({ status: 'fail', message: error });
   }
-}
+};
 export const attendEvent = async (data) => {
   console.log(data);
   await firestore().collection('Event').where('name', '==', data?.name).where('createdAt', '==', data?.createdAt).get().then(
@@ -133,32 +133,66 @@ export const attendEvent = async (data) => {
       await querySnapshot.forEach(function (doc) {
         const check = doc.data().attending.map(e => e.user).indexOf(auth().currentUser?.uid);
         if (check === -1) {
-          doc.ref.update({ attending: [...doc.data().attending, { name: auth()?.currentUser?.displayName, photoUrl: auth()?.currentUser?.photoURL, email: auth()?.currentUser?.email, user: auth()?.currentUser?.uid }] })
+          doc.ref.update({ attending: [...doc.data().attending, { name: auth()?.currentUser?.displayName, photoUrl: auth()?.currentUser?.photoURL, email: auth()?.currentUser?.email, user: auth()?.currentUser?.uid }] });
         }
       });
-      console.log({ status: 'success', message: 'Event Attended!' })
+      console.log({ status: 'success', message: 'Event Attended!' });
       return ({ status: 'success', message: 'Event Attended!' });
     }
   ).catch((err) => {
     console.log({ status: 'fail', message: err });
     return ({ status: 'fail', message: err });
   });
-}
+};
 export const getMyAttendEvent = async () => {
   let responce;
-  console.log(auth()?.currentUser?.displayName==='nomi')
+  console.log(auth()?.currentUser?.displayName === 'nomi');
   try {
     responce = await firestore().collection('Event').where('attending', 'array-contains', {
       email: auth()?.currentUser?.email,
       name: auth()?.currentUser?.displayName,
       photoUrl: auth()?.currentUser?.photoURL,
-      user: auth()?.currentUser?.uid
-    }).get(); 
+      user: auth()?.currentUser?.uid,
+    }).get();
     const data = responce.docs.map(doc => doc.data());
     return ({ status: 'success', message: data });
   } catch (error) {
     console.log({ status: 'fail', message: error });
     return ({ status: 'fail', message: error });
   }
-}
+};
+export const deleteMyAttendEvent = async (data) => {
+  // console.log("=================================");
+  // console.log(data);
+  // console.log("=================================");
 
+  await firestore().collection('Event').where('attending', 'array-contains', {
+    email: auth()?.currentUser?.email,
+    name: auth()?.currentUser?.displayName,
+    photoUrl: auth()?.currentUser?.photoURL,
+    user: auth()?.currentUser?.uid,
+  }).where('address', '==', data.address).where('name', '==', data.name).where('time', '==', data.time).get().then(
+    async function (querySnapshot) {
+      querySnapshot.forEach(function (doc) {
+        console.log("=================================");
+        let newAttending = doc.data().attending.map(element => {
+          if (element.user !== auth()?.currentUser?.uid) {
+            return element;
+          }
+        });
+        console.log("=================================");
+        
+        if (newAttending[0] === undefined) {
+          newAttending = [];
+        }
+        console.log(newAttending);
+        doc.ref.update({attending:newAttending});
+        // doc.ref.delete();
+      });
+      // console.log({ status: 'success', message: 'Post Deleted!' })
+      return ({ status: 'success', message: 'Post Deleted!' });
+    }
+  ).catch((err) => {
+    console.log({ status: 'fail', message: err });
+  });
+};
