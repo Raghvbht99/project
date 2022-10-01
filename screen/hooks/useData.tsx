@@ -1,5 +1,5 @@
 import React, {useCallback, useContext, useEffect, useState} from 'react';
-import {onSignUp, onSignIn, addEvent, getMyEvent , deleteEvent,getNotification,getEvent,attendEvent} from './firebaseUseData';
+import {onSignUp, onSignIn, addEvent, getMyEvent , deleteEvent,getNotification,getEvent,attendEvent,getMyAttendEvent} from './firebaseUseData';
 export const DataContext = React.createContext({});
 
 export const DataProvider = ({children}: {children: React.ReactNode}) => {
@@ -12,6 +12,7 @@ export const DataProvider = ({children}: {children: React.ReactNode}) => {
     getNotification,
     getEvent,
     attendEvent,
+    getMyAttendEvent
   };
   return (
     <DataContext.Provider value={contextValue}>{children}</DataContext.Provider>

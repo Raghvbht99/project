@@ -365,8 +365,9 @@ const CardAttending= (props) => {
 }
 
 const Profile = ({ navigation }) => {
-    const { getMyEvent, deleteEvent } = useData();
+    const { getMyEvent, deleteEvent,getMyAttendEvent } = useData();
     const [event, setEvent] = useState([]);
+    const [attendEvent,setAttendEvent] = useState([]);
     useEffect(() => {
         async function fetchData() {
             try {
@@ -377,6 +378,14 @@ const Profile = ({ navigation }) => {
                 } else {
                     alert(events.message);
                 }
+                const eventAttend = await getMyAttendEvent();
+                if (eventAttend.status == "success") {
+                    console.log(eventAttend.message);
+                    setAttendEvent(eventAttend.message);
+                } else {
+                    alert(eventAttend.message);
+                }
+
             } catch (error) {
                 alert(error);
             }
@@ -437,7 +446,7 @@ const Profile = ({ navigation }) => {
                             <View style={styles.OrganizedEvent}>
                                 <Text style={{ fontSize: 30, color: 'white' }}>Attending Event</Text>
                                 <View style={{ marginTop: 10 }}>
-                                    {event.map((item, index) => {
+                                    {attendEvent.map((item, index) => {
                                         console.log(index)
                                         return (<CardAttending key={index} data={{item,index,navigation,deleteEvent}} />);
                                     })}

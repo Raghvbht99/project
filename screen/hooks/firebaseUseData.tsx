@@ -8,7 +8,7 @@ import auth, { FirebaseAuthTypes } from '@react-native-firebase/auth';
 import analytics from '@react-native-firebase/analytics';
 
 export const currentUser = auth().currentUser;
-export const onSignUp = async (DOB: string,email: string, password: string, displayName: string, familyName: string, driver: string) => {
+export const onSignUp = async (DOB: string, email: string, password: string, displayName: string, familyName: string, driver: string) => {
   let returnResponse;
   let response;
   try {
@@ -23,16 +23,16 @@ export const onSignUp = async (DOB: string,email: string, password: string, disp
         displayName: displayName,
         familyName: familyName,
         driver: driver,
-        DOB:DOB,
-        user:auth().currentUser.uid
+        DOB: DOB,
+        user: auth().currentUser.uid
       }).then(function () {
         // console.log({ status: 'success', message: 'User Added Successfully!' })
       }).catch((Error) => {
-        returnResponse=({ status: 'fail', message: Error });
+        returnResponse = ({ status: 'fail', message: Error });
       })
 
-       console.log({ status: 'success', message: 'Account created successfully' });
-       returnResponse = ({ status: 'success', message: 'Account created successfully' });
+      console.log({ status: 'success', message: 'Account created successfully' });
+      returnResponse = ({ status: 'success', message: 'Account created successfully' });
     }).catch(err => {
       console.log("check 1");
       // console.log({ status: 'fail', message: err });
@@ -40,7 +40,7 @@ export const onSignUp = async (DOB: string,email: string, password: string, disp
     });
   } catch (error) {
     console.log({ status: 'fail', message: error });
-    returnResponse= ({ status: 'fail', message: error });
+    returnResponse = ({ status: 'fail', message: error });
   }
   //  return ({ status: 'success', message: 'Account created successfully' });
   return returnResponse;
@@ -144,3 +144,21 @@ export const attendEvent = async (data) => {
     return ({ status: 'fail', message: err });
   });
 }
+export const getMyAttendEvent = async () => {
+  let responce;
+  console.log(auth()?.currentUser?.displayName==='nomi')
+  try {
+    responce = await firestore().collection('Event').where('attending', 'array-contains', {
+      email: auth()?.currentUser?.email,
+      name: auth()?.currentUser?.displayName,
+      photoUrl: auth()?.currentUser?.photoURL,
+      user: auth()?.currentUser?.uid
+    }).get(); 
+    const data = responce.docs.map(doc => doc.data());
+    return ({ status: 'success', message: data });
+  } catch (error) {
+    console.log({ status: 'fail', message: error });
+    return ({ status: 'fail', message: error });
+  }
+}
+
