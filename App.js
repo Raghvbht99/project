@@ -11,7 +11,7 @@ function App() {
     <Stack.Navigator screenOptions={{
       headerShown: false
     }}
-      initialRouteName="Dashbord">
+      initialRouteName="StartingPoint">
       <Stack.Screen name="StartingPoint" component={StartingPoint} />
       <Stack.Screen name="Login" component={Login} />
       <Stack.Screen name="SignUp" component={SignUp} />
